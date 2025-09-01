@@ -1,0 +1,54 @@
+services:
+  - type: web
+    name: eagles-events-api
+    env: node
+    rootDir: backend
+    plan: free
+    autoDeploy: true
+    buildCommand: npm install
+    startCommand: npm start
+    runtime: node
+    nodeVersion: 18
+    envVars:
+      - key: NODE_ENV
+        value: production
+      # REQUIRED: set these in Render Dashboard with real values
+      - key: MONGO_URI
+        sync: false
+      - key: JWT_SECRET
+        sync: false
+      - key: ALLOWED_ORIGINS
+        sync: false
+      - key: FRONTEND_URL
+        sync: false
+      - key: BACKEND_URL
+        sync: false
+      # Optional email configuration (set if you want real emails)
+      - key: SMTP_HOST
+        sync: false
+      - key: SMTP_PORT
+        sync: false
+      - key: SMTP_SECURE
+        sync: false
+      - key: SMTP_USER
+        sync: false
+      - key: SMTP_PASS
+        sync: false
+      - key: EMAIL_FROM
+        sync: false
+      - key: EMAIL_SERVICE
+        sync: false
+      - key: EMAIL_USER
+        sync: false
+      - key: EMAIL_PASS
+        sync: false
+      - key: EMAIL_TO
+        sync: false
+      - key: CONTACT_TO
+        sync: false
+      - key: ADMIN_EMAILS
+        sync: false
+      - key: BASE_URL
+        sync: false
+    healthCheckPath: /api/health
+    healthCheckTimeout: 30
