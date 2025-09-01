@@ -102,7 +102,7 @@ export function QuoteManagement() {
       notifyError(errorMessage);
       setError({ type: 'error', message: errorMessage });
     }
-  }, [fetchQuotes]);
+  }, [fetchQuotes, notifySuccess, notifyError]);
 
   const handleRejectQuote = useCallback(async (quoteId) => {
     try {
@@ -124,7 +124,7 @@ export function QuoteManagement() {
       notifyError(errorMessage);
       setError({ type: 'error', message: errorMessage });
     }
-  }, [fetchQuotes]);
+  }, [fetchQuotes, notifySuccess, notifyError]);
 
   const handleUpdateQuote = useCallback(async (quoteId, updatedData) => {
     try {
@@ -152,7 +152,7 @@ export function QuoteManagement() {
       notifyError(errorMessage);
       setError({ type: 'error', message: errorMessage });
     }
-  }, [fetchQuotes]);
+  }, [fetchQuotes, notifySuccess, notifyError]);
 
   const getStatusIcon = useCallback((status) => {
     switch (status) {
@@ -199,7 +199,7 @@ export function QuoteManagement() {
       notifyError(errorMessage);
       setError({ type: 'error', message: errorMessage });
     }
-  }, [fetchQuotes]);
+  }, [fetchQuotes, notifySuccess, notifyError]);
 
   const handleConfirmQuote = useCallback(async (quoteId) => {
     try {
@@ -230,7 +230,7 @@ export function QuoteManagement() {
       notifyError(errorMessage);
       setError({ type: 'error', message: errorMessage });
     }
-  }, [fetchQuotes, navigate]);
+  }, [fetchQuotes, navigate, notifySuccess, notifyError]);
 
   // Memoize filtered quotes to prevent unnecessary recalculations
   const filteredQuotes = useMemo(() => {

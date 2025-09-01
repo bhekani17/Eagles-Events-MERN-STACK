@@ -1,5 +1,5 @@
 // API Base URL (using environment variable)
-const API_BASE_URL = process.env.REACT_APP_API_URL || 'https://eagles-events-mern-stack.onrender.com';
+const API_BASE_URL = process.env.REACT_APP_API_URL || 'https://eagleeventsprojectdemo.onrender.com';
 
 // Token management
 const TOKEN_KEY = 'adminToken';
