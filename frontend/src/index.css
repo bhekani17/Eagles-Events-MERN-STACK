@@ -1,0 +1,376 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom touch-friendly utilities */
+@layer components {
+  /* Touch-friendly button base */
+  .btn-touch {
+    @apply min-h-[44px] min-w-[44px];
+  }
+  
+  /* Touch-friendly button sizes */
+  .btn-touch-sm {
+    @apply min-h-[40px] min-w-[40px];
+  }
+  
+  .btn-touch-lg {
+    @apply min-h-[48px] min-w-[48px];
+  }
+  
+  /* Touch-friendly input fields */
+  .input-touch {
+    @apply min-h-[44px] px-4 py-3;
+  }
+  
+  /* Touch-friendly navigation items */
+  .nav-touch {
+    @apply min-h-[44px] min-w-[44px] px-4 py-2;
+  }
+  
+  /* Touch-friendly card interactions */
+  .card-touch {
+    @apply cursor-pointer transition-transform duration-200 active:scale-95;
+  }
+  
+  /* Safe area utilities for modern devices */
+  .safe-top {
+    padding-top: env(safe-area-inset-top);
+  }
+  
+  .safe-bottom {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+  
+  .safe-left {
+    padding-left: env(safe-area-inset-left);
+  }
+  
+  .safe-right {
+    padding-right: env(safe-area-inset-right);
+  }
+  
+  .safe-y {
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+  
+  .safe-x {
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+  }
+  
+  /* Enhanced touch feedback */
+  .touch-feedback {
+    @apply transition-all duration-150 ease-out;
+  }
+  
+  .touch-feedback:active {
+    @apply scale-95 opacity-80;
+  }
+  
+  /* Mobile-first responsive containers */
+  .container-responsive {
+    @apply w-full mx-auto px-4;
+  }
+  
+  @screen sm {
+    .container-responsive {
+      @apply max-w-screen-sm px-6;
+    }
+  }
+  
+  @screen md {
+    .container-responsive {
+      @apply max-w-screen-md px-8;
+    }
+  }
+  
+  @screen lg {
+    .container-responsive {
+      @apply max-w-screen-lg px-10;
+    }
+  }
+  
+  @screen xl {
+    .container-responsive {
+      @apply max-w-screen-xl px-12;
+    }
+  }
+  
+  @screen 2xl {
+    .container-responsive {
+      @apply max-w-screen-2xl px-16;
+    }
+  }
+}
+
+/* Enhanced scrollbar for touch devices */
+@layer utilities {
+  .scrollbar-touch {
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+    scrollbar-color: theme('colors.gray.400') theme('colors.gray.100');
+  }
+  
+  .scrollbar-touch::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  
+  .scrollbar-touch::-webkit-scrollbar-track {
+    background: theme('colors.gray.100');
+    border-radius: 3px;
+  }
+  
+  .scrollbar-touch::-webkit-scrollbar-thumb {
+    background: theme('colors.gray.400');
+    border-radius: 3px;
+  }
+  
+  .scrollbar-touch::-webkit-scrollbar-thumb:hover {
+    background: theme('colors.gray.500');
+  }
+}
+
+/* Base styles for better touch experience */
+@layer base {
+  /* Improve touch targets on mobile */
+  @media (pointer: coarse) {
+    button, a, input, select, textarea {
+      min-height: 44px;
+      min-width: 44px;
+    }
+    
+    /* Smaller touch targets for secondary elements */
+    .touch-secondary {
+      min-height: 32px;
+      min-width: 32px;
+    }
+  }
+  
+  /* Smooth scrolling for better mobile experience */
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Better focus indicators for touch devices */
+  *:focus-visible {
+    outline: 2px solid theme('colors.gold.500');
+    outline-offset: 2px;
+  }
+  
+  /* Improved text selection */
+  ::selection {
+    background-color: theme('colors.gold.200');
+    color: theme('colors.gray.900');
+  }
+  
+  /* Better tap highlight color */
+  * {
+    -webkit-tap-highlight-color: theme('colors.gold.200');
+  }
+}
+
+/* Custom animations for touch interactions */
+@layer utilities {
+  .animate-touch-press {
+    animation: touchPress 0.15s ease-out;
+  }
+  
+  .animate-touch-release {
+    animation: touchRelease 0.15s ease-out;
+  }
+}
+
+@keyframes touchPress {
+  0% { transform: scale(1); }
+  50% { transform: scale(0.95); }
+  100% { transform: scale(1); }
+}
+
+@keyframes touchRelease {
+  0% { transform: scale(0.95); }
+  100% { transform: scale(1); }
+}
+
+/* Auto-slide animations */
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideOut {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+}
+
+.auto-slide-enter {
+  animation: slideIn 0.5s ease-out;
+}
+
+.auto-slide-exit {
+  animation: slideOut 0.5s ease-out;
+}
+
+/* Hidden scrollbar for reviews */
+.reviews-scrollbar {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+}
+
+.reviews-scrollbar::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
+
+/* Enhanced mobile navigation */
+@layer components {
+  .mobile-nav-item {
+    @apply block w-full text-left px-4 py-3 text-base font-medium rounded-lg transition-all duration-200 text-gray-300 hover:text-white transform hover:scale-[1.02] active:scale-[0.98];
+  }
+  
+  .mobile-nav-item:hover {
+    @apply bg-gray-800/60 text-gold-300 shadow-sm;
+  }
+  
+  .mobile-nav-item.active {
+    @apply bg-gold-600/20 text-gold-400 border border-gold-500/30;
+  }
+  
+  /* Touch-friendly form elements */
+  .form-input-touch {
+    @apply w-full min-h-[44px] px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gold-500 focus:border-transparent transition-colors duration-200;
+  }
+  
+  .form-label-touch {
+    @apply block text-sm font-medium text-gray-700 mb-2;
+  }
+  
+  /* Touch-friendly modal */
+  .modal-touch {
+    @apply fixed inset-0 z-50 flex items-center justify-center p-4;
+  }
+  
+  .modal-content-touch {
+    @apply bg-white rounded-lg shadow-xl max-w-md w-full max-h-[90vh] overflow-y-auto;
+  }
+  
+  /* Touch-friendly dropdown */
+  .dropdown-touch {
+    @apply absolute z-10 mt-2 w-full bg-white rounded-md shadow-lg border border-gray-200;
+  }
+  
+  .dropdown-item-touch {
+    @apply block w-full text-left px-4 py-3 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 transition-colors duration-150;
+  }
+}
+
+/* Responsive typography utilities */
+@layer utilities {
+  .text-responsive-xs {
+    @apply text-xs;
+  }
+  
+  @screen sm {
+    .text-responsive-xs {
+      @apply text-sm;
+    }
+  }
+  
+  .text-responsive-sm {
+    @apply text-sm;
+  }
+  
+  @screen sm {
+    .text-responsive-sm {
+      @apply text-base;
+    }
+  }
+  
+  .text-responsive-base {
+    @apply text-base;
+  }
+  
+  @screen sm {
+    .text-responsive-base {
+      @apply text-lg;
+    }
+  }
+  
+  .text-responsive-lg {
+    @apply text-lg;
+  }
+  
+  @screen sm {
+    .text-responsive-lg {
+      @apply text-xl;
+    }
+  }
+  
+  .text-responsive-xl {
+    @apply text-xl;
+  }
+  
+  @screen sm {
+    .text-responsive-xl {
+      @apply text-2xl;
+    }
+  }
+  
+  .text-responsive-2xl {
+    @apply text-2xl;
+  }
+  
+  @screen sm {
+    .text-responsive-2xl {
+      @apply text-3xl;
+    }
+  }
+}
+
+/* Enhanced accessibility for touch devices */
+@layer utilities {
+  .sr-only-touch {
+    @apply sr-only;
+  }
+  
+  @media (pointer: coarse) {
+    .sr-only-touch {
+      @apply not-sr-only;
+    }
+  }
+  
+  /* Better focus management for mobile */
+  .focus-touch {
+    @apply focus:outline-none focus:ring-2 focus:ring-gold-500 focus:ring-offset-2;
+  }
+  
+  /* Touch-friendly spacing */
+  .space-touch {
+    @apply space-y-4;
+  }
+  
+  @screen sm {
+    .space-touch {
+      @apply space-y-6;
+    }
+  }
+  
+  @screen lg {
+    .space-touch {
+      @apply space-y-8;
+    }
+  }
+}
