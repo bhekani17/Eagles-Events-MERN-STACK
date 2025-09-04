@@ -111,7 +111,7 @@ export function Header({ onQuoteClick }) {
             <div className="flex-shrink-0">
               <Link 
                 to="/" 
-                className="flex items-center focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gold-500 rounded-md p-1 -m-1"
+                className="flex items-center focus:outline-none focus:ring-0 focus:ring-offset-0 rounded-md p-1 -m-1"
                 onClick={closeMobileMenu}
                 aria-label="Eagles Events Home"
               >
@@ -175,7 +175,7 @@ export function Header({ onQuoteClick }) {
               </Button>
               <button
                 onClick={toggleMenu}
-                className="inline-flex items-center justify-center min-h-[44px] min-w-[44px] p-2 rounded-md hover:text-white hover:bg-black/30 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-gold-500 transition-colors duration-200"
+                className="inline-flex items-center justify-center min-h-[44px] min-w-[44px] p-2 rounded-md text-white hover:bg-black/30 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-gold-500 transition-colors duration-200"
                 aria-expanded={isMenuOpen}
                 aria-controls="mobile-menu"
                 aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}

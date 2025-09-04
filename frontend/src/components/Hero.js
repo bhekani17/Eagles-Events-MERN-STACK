@@ -2,9 +2,10 @@ import { Button } from './ui/button';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/opacity.css';
 import { useEffect, useState, useCallback, useMemo, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 // Inlined ImageCarousel to reduce component count
-function ImageCarousel({ slides, onQuoteClick, autoPlay = true, interval = 6000 }) {
+function ImageCarousel({ slides, onQuoteClick, onHireClick, autoPlay = true, interval = 6000 }) {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
   const [currentInnerIndex, setCurrentInnerIndex] = useState(0);
@@ -176,7 +177,7 @@ function ImageCarousel({ slides, onQuoteClick, autoPlay = true, interval = 6000 
             {/* Dark overlay for contrast */}
             <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/30 to-black/50" />
             {/* Slide content */}
-            <div className="absolute inset-0 flex items-center justify-center p-4">
+            <div className="absolute inset-0 flex items-start sm:items-center justify-center pt-28 sm:pt-0 p-4">
               <div className="text-center text-white max-w-4xl px-4">
                 {slide.subtitle && (
                   <h2 className="text-xs sm:text-sm uppercase tracking-wide mb-1 sm:mb-2 opacity-90">
@@ -192,7 +193,7 @@ function ImageCarousel({ slides, onQuoteClick, autoPlay = true, interval = 6000 
                   </p>
                 )}
                 <Button
-                  onClick={onQuoteClick}
+                  onClick={onHireClick || onQuoteClick}
                   size="touch-lg"
                   className="bg-gold-600 hover:bg-gold-700 text-black font-semibold text-sm sm:text-base"
                   aria-label={slide.ctaText || 'Get a quote'}
@@ -212,6 +213,11 @@ function ImageCarousel({ slides, onQuoteClick, autoPlay = true, interval = 6000 
 
 export function Hero({ onQuoteClick }) {
   const [isVisible, setIsVisible] = useState(false);
+  const navigate = useNavigate();
+
+  const handleHireClick = useCallback(() => {
+    navigate('/hire');
+  }, [navigate]);
 
   useEffect(() => {
     // Trigger animations after component mounts
@@ -233,8 +239,8 @@ export function Hero({ onQuoteClick }) {
     },
     {
       id: 'TENTS',
-      image: '/images/s5.webp',
-      images: ['/images/s5.webp', '/images/t4.jpg'],
+      image: '/images/s1.webp',
+      images: ['/images/s1.webp', '/images/t4.jpg'],
       title: 'TENTS',
       subtitle: 'Perfect Hospitality Solutions',
       description: 'High-quality tents and marquees for all weather protection. Perfect for weddings, parties, and corporate events.',
@@ -242,8 +248,8 @@ export function Hero({ onQuoteClick }) {
     },
     {
       id: 'MOBILE FREEZER',
-      image: '/images/f4.webp',
-      images: ['/images/f4.webp', '/images/f1.jpg'],
+      image: '/images/f2.jpg',
+      images: ['/images/f5.webp', '/images/f1.jpg'],
       title: 'Mobile Freezer',
       subtitle: 'Professional Event Services',
       description: 'Complete mobile freezer solutions including cold storage, refrigeration, and temperature control. Everything you need for successful events.',
@@ -252,7 +258,7 @@ export function Hero({ onQuoteClick }) {
     {
       id: 'SLAUGHTERING SERVICES',
       image: '/images/sla.jpg',
-      images: ['/images/sla.jpg', '/images/t4.jpg'],
+      images: ['/images/slaughter3.jpg', '/images/slaughter2.jpg'],
       title: 'Slaughtering Services',
       subtitle: 'Professional & Hygienic',
       description: 'Professional mobile slaughtering services that bring expert meat processing to your location. Fully compliant with health standards.',
@@ -267,8 +273,9 @@ export function Hero({ onQuoteClick }) {
         <ImageCarousel 
           slides={heroSlides}
           onQuoteClick={onQuoteClick}
+          onHireClick={handleHireClick}
           autoPlay={true}
-          interval={6000}
+          interval={5000}
         />
         
         {/* Logo Overlay with Animation */}

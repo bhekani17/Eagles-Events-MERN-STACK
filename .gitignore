@@ -50,3 +50,6 @@ backend/uploads/*
 *.pem
 *.crt
 *.key
+
+# Ignore Windows reserved filename to avoid git add failures
+frontend/public/images/aux.*

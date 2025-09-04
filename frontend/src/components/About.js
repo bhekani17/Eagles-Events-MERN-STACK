@@ -26,14 +26,34 @@ export function About({ onQuoteClick }) {
   ];
 
   return (
-    <section id="about" className="pt-16 pb-20 bg-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="about" className="relative pt-0 pb-0">
+      {/* Section background image */}
+      <div className="absolute inset-0">
+        <img
+          src="/images/f9.webp"
+          alt=""
+          className="w-full h-full object-cover"
+          aria-hidden="true"
+          loading="lazy"
+          decoding="async"
+        />
+        {/* Dark overlay for readability */}
+        <div className="absolute inset-0 bg-black/60" />
+      </div>
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-8 md:-mt-12">
         {/* Header */}
-        <div className="text-center mb-12">
-          <h2 className="text-4xl font-bold text-gray-900 mb-4">
+        <div className="text-center mb-12 pt-10 md:pt-14">
+          <img
+            src="/images/logo.png"
+            alt="Eagles Events Logo"
+            className="mx-auto h-16 sm:h-20 md:h-24 w-auto mb-4 drop-shadow-2xl"
+            loading="lazy"
+            decoding="async"
+          />
+          <h2 className="text-4xl font-bold text-white mb-4">
             About Eagles Events
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+          <p className="text-xl text-gray-100 max-w-3xl mx-auto">
             Based in Soweto, we specialize in providing top-quality mobile hire services and slaughtering solutions for all types of events. 
             Our commitment to excellence and customer satisfaction sets us apart in the industry.
           </p>
@@ -56,20 +76,20 @@ export function About({ onQuoteClick }) {
 
           {/* Content */}
           <div>
-            <h3 className="text-3xl font-bold text-gray-900 mb-6">
+            <h3 className="text-3xl font-bold text-white mb-6">
               Excellence in Event Services
             </h3>
-            <p className="text-gray-600 mb-6">
+            <p className="text-gray-100 mb-6">
               Eagles Events was founded with a simple mission: to provide exceptional event services 
               that exceed our clients' expectations. What started as a small family business has grown 
               into one of South Africa's most trusted event service providers.
             </p>
-            <p className="text-gray-600 mb-6">
+            <p className="text-gray-100 mb-6">
               We specialize in premium VIP mobile toilets, professional-grade mobile freezers, 
               weather-resistant tents and marquees, and compliant slaughtering services. Our team 
               is committed to delivering quality, reliability, and outstanding customer service.
             </p>
-            <p className="text-gray-600 mb-8">
+            <p className="text-gray-100 mb-8">
               Whether you're planning a wedding, corporate event, festival, or private celebration, 
               we have the expertise and equipment to make your event a success.
             </p>

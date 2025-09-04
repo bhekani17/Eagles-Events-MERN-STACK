@@ -9,7 +9,7 @@ export function Services({ onQuoteClick }) {
       title: 'Mobile Hire Services',
       description: 'Comprehensive mobile solutions for all types of events including VIP toilets, tents, and other essential facilities.',
       features: ['VIP Mobile Toilets', 'Tents & Marquees', 'Event Equipment', 'Professional Setup'],
-      image: '/images/TOILET2.webp'
+      image: '/images/mobilepack1.jpg'
     },
     {
       id: 'event-packages',
@@ -17,7 +17,7 @@ export function Services({ onQuoteClick }) {
       title: 'Event Packages',
       description: 'Tailored packages for weddings, funerals, birthdays, and corporate events to suit your specific needs.',
       features: ['Customizable Options', 'All-inclusive Deals', 'Professional Planning', 'Budget Friendly'],
-      image: '/images/s6.webp'
+      image: '/images/pack1.webp'
     },
     {
       id: 'slaughtering-services',
@@ -25,7 +25,7 @@ export function Services({ onQuoteClick }) {
       title: 'Slaughtering Services',
       description: 'Professional and hygienic mobile slaughtering services for all your event requirements.',
       features: ['Mobile Units', 'Health Compliant', 'Professional Staff', 'Quality Assurance'],
-      image: '/images/sla.jpg'
+      image: '/images/slaughter2.jpg'
     },
     {
       id: 'auxiliary-services',
@@ -33,7 +33,7 @@ export function Services({ onQuoteClick }) {
       title: 'Auxiliary Services',
       description: 'Additional services to ensure your event runs smoothly from start to finish.',
       features: ['Waste Management', 'Water Supply', 'Power Solutions', 'Event Cleanup'],
-      image: '/images/v1.webp'
+      image: '/images/aux2.webp'
     }
   ];
 
