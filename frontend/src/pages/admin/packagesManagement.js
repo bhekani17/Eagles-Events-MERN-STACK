@@ -2,7 +2,7 @@ import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { getAuthToken } from '../../services/api';
 
-const API_BASE = process.env.REACT_APP_API_URL || 'http://localhost:5003';
+const API_BASE = process.env.REACT_APP_API_URL || 'https://backend-g983.onrender.com';
 const API_URL = `${API_BASE}/api/packages`;
 const UPLOAD_URL = `${API_BASE}/api/upload`;
 
@@ -259,6 +259,8 @@ export const PackagesManagement = () => {
     'private',
     'community',
     'charity',
+    'conference',
+    'anniversary',
     'other'
   ];
   const labelFor = (val) => {
@@ -276,6 +278,8 @@ export const PackagesManagement = () => {
       'private': 'Private Party',
       'community': 'Community Event',
       'charity': 'Charity Event',
+      'conference': 'Conference',
+      'anniversary': 'Anniversary',
       'other': 'Other'
     };
     return labels[val] || val.charAt(0).toUpperCase() + val.slice(1);
