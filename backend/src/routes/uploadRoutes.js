@@ -1,45 +1,30 @@
 import express from 'express';
 import path from 'path';
 import fs from 'fs';
-import cors from 'cors';
 import mongoose from 'mongoose';
 import { uploadFile } from '../controllers/uploadController.js';
+import { protect, admin } from '../middleware/authMiddleware.js';
 
 const router = express.Router();
 
-// Enable CORS for all routes
-router.use(cors({
-  origin: true, // Reflect the request origin
-  credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
-  exposedHeaders: ['Content-Range', 'X-Total-Count']
-}));
+// CORS is handled globally in the main app. Avoid overriding with permissive settings here.
 
-// Handle preflight requests
-router.options('*', cors());
-
-// Log all requests to this router
-router.use((req, res, next) => {
+// Minimal request logging for observability without exposing sensitive headers
+router.use((req, _res, next) => {
   console.log(`[${new Date().toISOString()}] ${req.method} ${req.originalUrl}`);
-  console.log('Headers:', JSON.stringify(req.headers, null, 2));
-  console.log('Content-Type:', req.get('Content-Type'));
-  console.log('Origin:', req.get('Origin'));
   next();
 });
 
 // Test route to check if API is accessible
-router.get('/test', (req, res) => {
+router.get('/test', protect, admin, (_req, res) => {
   res.json({ 
     status: 'upload test route working',
-    timestamp: new Date().toISOString(),
-    headers: req.headers
+    timestamp: new Date().toISOString()
   });
 });
 
 // File upload route
-router.post('/', (req, res, next) => {
-  console.log('Upload request received. Headers:', JSON.stringify(req.headers, null, 2));
+router.post('/', protect, admin, (req, res, next) => {
   uploadFile(req, res, next);
 });
 
@@ -93,7 +78,7 @@ router.get('/files/:id', async (req, res) => {
 });
 
 // Test route to check if uploads directory is writable
-router.get('/disk-test', (req, res) => {
+router.get('/disk-test', protect, admin, (req, res) => {
   const testDir = path.join(process.cwd(), 'uploads');
   const testFilePath = path.join(testDir, 'test.txt');
   

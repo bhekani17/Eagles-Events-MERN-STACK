@@ -2,6 +2,9 @@ import jwt from 'jsonwebtoken';
 import asyncHandler from 'express-async-handler';
 import Admin from '../models/Admin.js';
 
+// Read JWT secret once to avoid using insecure fallbacks
+const jwtSecret = process.env.JWT_SECRET;
+
 // @desc    Protect routes - verify JWT token
 // @access  Private
 export const protect = asyncHandler(async (req, res, next) => {
@@ -14,8 +17,14 @@ export const protect = asyncHandler(async (req, res, next) => {
       // Get token from header
       token = authorization.split(' ')[1];
 
+      // Ensure JWT secret is configured
+      if (!jwtSecret) {
+        res.status(500);
+        throw new Error('Server misconfiguration: JWT secret is missing');
+      }
+
       // Verify token
-      const decoded = jwt.verify(token, process.env.JWT_SECRET || 'your-secret-key');
+      const decoded = jwt.verify(token, jwtSecret);
 
       // Get admin from the token
       req.admin = await Admin.findById(decoded.id).select('-password');

@@ -298,7 +298,7 @@ export const adminAPI = {
       // Optional: Call the backend to invalidate the token
       const token = getAuthToken();
       if (token) {
-        await fetch(`${API_BASE_URL}/admin/auth/logout`, {
+        await fetch(`${API_BASE_URL}/api/admin/auth/logout`, {
           method: 'POST',
           headers: {
             'Authorization': `Bearer ${token}`,
