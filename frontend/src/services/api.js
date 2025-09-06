@@ -39,7 +39,6 @@ const isTokenExpired = (token) => {
     const payload = JSON.parse(atob(token.split('.')[1]));
     return payload.exp * 1000 < Date.now();
   } catch (error) {
-    console.error('Error checking token expiration:', error);
     return true;
   }
 };
@@ -125,7 +124,6 @@ const apiCall = async (endpoint, options = {}) => {
       const text = await response.text();
       data = text ? JSON.parse(text) : {};
     } catch (parseError) {
-      console.error('Error parsing JSON response:', parseError);
       throw new Error('Invalid JSON response from server');
     }
     
@@ -643,7 +641,7 @@ export const adminAPI = {
    */
   getPackageById: async (id) => {
     try {
-      const response = await apiCall(`/api/admin/packages/${id}`);
+      const response = await apiCall(`/api/packages/${id}`);
       return response;
     } catch (error) {
       console.error(`Error fetching package ${id}:`, error);
@@ -658,7 +656,7 @@ export const adminAPI = {
    */
   createPackage: async (data) => {
     try {
-      const response = await apiCall('/api/admin/packages', {
+      const response = await apiCall('/api/packages', {
         method: 'POST',
         body: data
       });
@@ -677,7 +675,7 @@ export const adminAPI = {
    */
   updatePackage: async (id, data) => {
     try {
-      const response = await apiCall(`/api/admin/packages/${id}`, {
+      const response = await apiCall(`/api/packages/${id}`, {
         method: 'PUT',
         body: data
       });
@@ -695,7 +693,7 @@ export const adminAPI = {
    */
   deletePackage: async (id) => {
     try {
-      const response = await apiCall(`/api/admin/packages/${id}`, { 
+      const response = await apiCall(`/api/packages/${id}`, { 
         method: 'DELETE' 
       });
       return response;
@@ -712,7 +710,7 @@ export const adminAPI = {
    */
   togglePackageStatus: async (id) => {
     try {
-      const response = await apiCall(`/api/admin/packages/${id}/toggle-active`, {
+      const response = await apiCall(`/api/packages/${id}/toggle-active`, {
         method: 'PATCH'
       });
       return response;
@@ -729,7 +727,7 @@ export const adminAPI = {
    */
   togglePopularStatus: async (id) => {
     try {
-      const response = await apiCall(`/api/admin/packages/${id}/toggle-popular`, {
+      const response = await apiCall(`/api/packages/${id}/toggle-popular`, {
         method: 'PATCH'
       });
       return response;

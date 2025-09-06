@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useMemo, memo } from 'react';
 import { X, ArrowLeft, Calendar, Users, MapPin, Package, Loader2, AlertCircle, CheckCircle, RefreshCw, Send } from 'lucide-react';
 import { Button } from './ui/button';
 import { PaymentModal } from './PaymentModal';
@@ -7,7 +7,7 @@ import { publicAPI } from '../services/api';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-export function QuoteModal({ isOpen, onClose, preSelectedItem = null }) {
+const QuoteModal = memo(function QuoteModal({ isOpen, onClose, preSelectedItem = null }) {
   const [formData, setFormData] = useState({
     name: '',
     company: '',
@@ -44,22 +44,23 @@ export function QuoteModal({ isOpen, onClose, preSelectedItem = null }) {
 
 
 
-  const categories = [
+  // Memoize static categories to prevent recreation on every render
+  const categories = useMemo(() => [
     { value: 'all', label: 'All Equipment' },
     { value: 'VIP Mobile Toilets', label: 'VIP Mobile Toilets' },
     { value: 'Mobile Freezers', label: 'Mobile Freezers' },
     { value: 'Tents & Marquees', label: 'Tents & Marquees' },
     { value: 'Slaughtering Services', label: 'Slaughtering Services' }
-  ];
+  ], []);
 
-  // Format price with ZAR currency
-  const formatPrice = (price) => {
+  // Memoize price formatter to prevent recreation on every render
+  const formatPrice = useCallback((price) => {
     return new Intl.NumberFormat('en-ZA', { 
       style: 'currency', 
       currency: 'ZAR',
       minimumFractionDigits: 2
     }).format(price || 0);
-  };
+  }, []);
 
   const fetchEquipment = useCallback(async () => {
     try {
@@ -289,15 +290,20 @@ export function QuoteModal({ isOpen, onClose, preSelectedItem = null }) {
     });
   };
 
-  const calculateTotalCost = () => {
+  // Memoize total cost calculation to prevent recalculation on every render
+  const calculateTotalCost = useMemo(() => {
     return formData.selectedItems.reduce((total, item) => {
       return total + ((item.price || 0) * (item.quantity || 1));
     }, 0);
-  };
+  }, [formData.selectedItems]);
 
-  const filteredEquipment = selectedCategory === 'all' 
-    ? (equipment || []) 
-    : (equipment || []).filter(item => item.category === selectedCategory);
+  // Memoize filtered equipment to prevent recalculation on every render
+  const filteredEquipment = useMemo(() => {
+    if (!equipment || equipment.length === 0) return [];
+    return selectedCategory === 'all' 
+      ? equipment 
+      : equipment.filter(item => item.category === selectedCategory);
+  }, [equipment, selectedCategory]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -365,36 +371,54 @@ export function QuoteModal({ isOpen, onClose, preSelectedItem = null }) {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
-      <div className="bg-white rounded-2xl max-w-5xl w-full max-h-[90vh] overflow-y-auto">
+    <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-2 sm:p-4">
+        <div className="bg-white rounded-2xl max-w-5xl w-full max-h-[95vh] sm:max-h-[90vh] overflow-y-auto shadow-2xl border border-gray-200">
         {/* Header */}
-        <div className="relative p-6 border-b border-gray-200">
+        <div className="relative bg-gradient-to-r from-blue-600 via-blue-700 to-blue-800 text-white p-4 sm:p-6 border-b border-blue-200">
+          {/* Background Pattern */}
+          <div className="absolute inset-0 opacity-10">
+            <div 
+              className="absolute inset-0 bg-center bg-no-repeat bg-contain"
+              style={{ backgroundImage: "url('/images/logo.png')" }}
+            ></div>
+          </div>
+          
+          {/* Decorative Elements */}
+          <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
+            <div className="absolute top-4 left-4 w-8 h-8 bg-white/10 rounded-full blur-sm"></div>
+            <div className="absolute top-8 right-8 w-6 h-6 bg-white/15 rounded-full blur-sm"></div>
+            <div className="absolute bottom-4 left-1/4 w-4 h-4 bg-white/20 rounded-full blur-sm"></div>
+            <div className="absolute bottom-6 right-1/4 w-5 h-5 bg-white/10 rounded-full blur-sm"></div>
+          </div>
+          
           {/* Centered title layer */}
-          <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+          <div className="relative flex items-center justify-center pointer-events-none">
             <div className="text-center">
-              <h2 className="text-2xl font-bold text-gray-900">Request an Instant Quotation</h2>
-              <div className="text-sm text-gray-500">Step 1: Details</div>
+              <div className="inline-flex items-center justify-center w-12 h-12 bg-white/20 rounded-full mb-3">
+                <Package className="w-6 h-6 text-white" />
+              </div>
+              <h2 className="text-2xl sm:text-3xl font-bold text-white mb-2 drop-shadow-lg">Request an Instant Quotation</h2>
+              <div className="text-blue-100 text-sm sm:text-base font-medium">Step 1: Event Details & Equipment Selection</div>
             </div>
           </div>
+          
           {/* Controls layer */}
-          <div className="flex items-center justify-between">
-            <div>
-              {showPayment && (
-                <Button
-                  type="button"
-                  variant="outline"
-                  onClick={handleBack}
-                  className="inline-flex items-center gap-2"
-                  aria-label="Back"
-                >
-                  <ArrowLeft className="w-4 h-4" />
-                  Back
-                </Button>
-              )}
-            </div>
+          <div className="absolute top-4 right-4 flex items-center space-x-2">
+            {showPayment && (
+              <Button
+                type="button"
+                variant="outline"
+                onClick={handleBack}
+                className="inline-flex items-center gap-2 bg-white/10 border-white/20 text-white hover:bg-white/20 hover:border-white/30"
+                aria-label="Back"
+              >
+                <ArrowLeft className="w-4 h-4" />
+                Back
+              </Button>
+            )}
             <button
               onClick={onClose}
-              className="text-gray-400 hover:text-gray-600 p-2"
+              className="text-white/80 hover:text-white hover:bg-white/10 p-2 min-h-[44px] min-w-[44px] flex items-center justify-center touch-feedback rounded-full transition-all duration-200"
               aria-label="Close"
             >
               <X className="w-6 h-6" />
@@ -402,7 +426,7 @@ export function QuoteModal({ isOpen, onClose, preSelectedItem = null }) {
           </div>
         </div>
         {/* Main Content: 2-column layout */}
-        <div className="p-6">
+        <div className="p-4 sm:p-6">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {/* Form */}
         <form onSubmit={handleSubmit} className="space-y-6 md:col-span-2">
@@ -634,7 +658,7 @@ export function QuoteModal({ isOpen, onClose, preSelectedItem = null }) {
                     Selected Items ({formData.selectedItems.length})
                   </p>
                   <p className="text-lg font-bold text-blue-900">
-                    Total: {formatPrice(calculateTotalCost())}/day
+                    Total: {formatPrice(calculateTotalCost)}/day
                   </p>
                 </div>
                 <div className="space-y-3">
@@ -826,12 +850,12 @@ export function QuoteModal({ isOpen, onClose, preSelectedItem = null }) {
 
           {/* Sticky action bar */}
           <div className="sticky bottom-0 bg-white p-4 border-t mt-6">
-            <div className="flex flex-col sm:flex-row gap-4">
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
               <Button
                 type="button"
                 onClick={onClose}
                 variant="outline"
-                className="w-full sm:w-auto flex-1"
+                className="w-full sm:w-auto sm:flex-1 order-2 sm:order-1 min-h-[48px] touch-feedback"
                 disabled={isSubmitting}
               >
                 Cancel
@@ -839,7 +863,7 @@ export function QuoteModal({ isOpen, onClose, preSelectedItem = null }) {
               <Button
                 type="submit"
                 disabled={isSubmitting || formData.selectedItems.length === 0}
-                className="w-full sm:w-auto flex-1 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold shadow-md"
+                className="w-full sm:w-auto sm:flex-1 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-semibold shadow-md order-1 sm:order-2 min-h-[48px] touch-feedback"
                 size="lg"
               >
                 {isSubmitting ? (
@@ -870,7 +894,7 @@ export function QuoteModal({ isOpen, onClose, preSelectedItem = null }) {
               <div className="border-t pt-2">
                 <div className="flex items-center justify-between">
                   <span className="text-sm text-blue-700">Estimated Total (per day)</span>
-                  <span className="text-xl font-bold text-blue-900">{formatPrice(calculateTotalCost())}</span>
+                  <span className="text-xl font-bold text-blue-900">{formatPrice(calculateTotalCost)}</span>
                 </div>
               </div>
               {formData.selectedItems.length > 0 && (
@@ -931,4 +955,6 @@ export function QuoteModal({ isOpen, onClose, preSelectedItem = null }) {
       />
     </div>
   );
-}
+});
+
+export { QuoteModal };

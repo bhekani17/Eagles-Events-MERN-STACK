@@ -374,3 +374,176 @@
     }
   }
 }
+
+/* Services page specific animations */
+@layer utilities {
+  .service-card-enter {
+    animation: serviceCardEnter 0.6s ease-out forwards;
+  }
+  
+  .service-card-stagger-1 {
+    animation-delay: 0.1s;
+  }
+  
+  .service-card-stagger-2 {
+    animation-delay: 0.2s;
+  }
+  
+  .service-card-stagger-3 {
+    animation-delay: 0.3s;
+  }
+  
+  .service-card-stagger-4 {
+    animation-delay: 0.4s;
+  }
+  
+  .floating-animation {
+    animation: floating 3s ease-in-out infinite;
+  }
+  
+  .pulse-glow {
+    animation: pulseGlow 2s ease-in-out infinite;
+  }
+}
+
+@keyframes serviceCardEnter {
+  0% {
+    opacity: 0;
+    transform: translateY(30px) scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes floating {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes pulseGlow {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(251, 191, 36, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 0 10px rgba(251, 191, 36, 0);
+  }
+}
+
+/* Enhanced mobile touch interactions */
+@layer components {
+  .service-card-mobile {
+    @apply touch-feedback active:scale-95 transition-transform duration-150;
+  }
+  
+  .service-image-mobile {
+    @apply touch-feedback;
+  }
+  
+  .service-button-mobile {
+    @apply touch-feedback active:scale-95 min-h-[48px] min-w-[48px];
+  }
+}
+
+/* Improved mobile grid layout */
+@layer utilities {
+  .services-grid-mobile {
+    @apply grid grid-cols-1 gap-6;
+  }
+  
+  @screen sm {
+    .services-grid-mobile {
+      @apply grid-cols-1 gap-8;
+    }
+  }
+  
+  @screen lg {
+    .services-grid-mobile {
+      @apply grid-cols-2 gap-10;
+    }
+  }
+}
+
+/* Services page background animations */
+@layer utilities {
+  .bg-float-1 {
+    animation: backgroundFloat1 8s ease-in-out infinite;
+  }
+  
+  .bg-float-2 {
+    animation: backgroundFloat2 10s ease-in-out infinite;
+  }
+  
+  .bg-float-3 {
+    animation: backgroundFloat3 12s ease-in-out infinite;
+  }
+  
+  .bg-pulse-slow {
+    animation: backgroundPulse 6s ease-in-out infinite;
+  }
+  
+  .bg-rotate-slow {
+    animation: backgroundRotate 20s linear infinite;
+  }
+}
+
+@keyframes backgroundFloat1 {
+  0%, 100% {
+    transform: translateY(0px) translateX(0px);
+  }
+  25% {
+    transform: translateY(-10px) translateX(5px);
+  }
+  50% {
+    transform: translateY(-5px) translateX(-5px);
+  }
+  75% {
+    transform: translateY(-15px) translateX(3px);
+  }
+}
+
+@keyframes backgroundFloat2 {
+  0%, 100% {
+    transform: translateY(0px) translateX(0px);
+  }
+  33% {
+    transform: translateY(-8px) translateX(-8px);
+  }
+  66% {
+    transform: translateY(-12px) translateX(6px);
+  }
+}
+
+@keyframes backgroundFloat3 {
+  0%, 100% {
+    transform: translateY(0px) translateX(0px);
+  }
+  50% {
+    transform: translateY(-6px) translateX(-6px);
+  }
+}
+
+@keyframes backgroundPulse {
+  0%, 100% {
+    opacity: 0.1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.2;
+    transform: scale(1.05);
+  }
+}
+
+@keyframes backgroundRotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

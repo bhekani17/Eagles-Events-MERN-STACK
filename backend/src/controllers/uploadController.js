@@ -14,12 +14,6 @@ const fileFilter = (req, file, cb) => {
     const extname = path.extname(file.originalname).toLowerCase();
     const mimetype = file.mimetype;
     
-    console.log('Checking file:', {
-      originalname: file.originalname,
-      extname,
-      mimetype,
-      size: file.size
-    });
 
     if (filetypes.test(extname) && mimetypes.test(mimetype)) {
       return cb(null, true);
@@ -46,15 +40,7 @@ const upload = multer({
 
 // Handle file upload to MongoDB GridFS
 const uploadFile = async (req, res, next) => {
-  console.log('Starting file upload...');
-  console.log('Request headers:', JSON.stringify(req.headers, null, 2));
-  console.log('Content-Type:', req.get('Content-Type'));
-  
   upload(req, res, async (err) => {
-    console.log('Upload callback triggered');
-    console.log('Upload error:', err);
-    console.log('Uploaded file:', req.file);
-    console.log('Request body:', req.body);
     
     // Handle upload errors
     if (err) {
@@ -90,15 +76,9 @@ const uploadFile = async (req, res, next) => {
     
     // Check if file was uploaded
     if (!req.file) {
-      console.error('No file in request. Files:', req.files);
       return res.status(400).json({ 
         success: false, 
-        message: 'No file was uploaded or file upload was aborted.',
-        details: {
-          files: req.files,
-          body: req.body,
-          headers: req.headers
-        }
+        message: 'No file was uploaded or file upload was aborted.'
       });
     }
     

@@ -10,6 +10,8 @@ export function Header({ onQuoteClick }) {
   const location = useLocation();
   const menuRef = useRef(null);
   const firstMenuItemRef = useRef(null);
+  const menuButtonRef = useRef(null);
+  const mobileMenuRef = useRef(null);
   const navigate = useNavigate();
 
   const navigation = [
@@ -25,6 +27,10 @@ export function Header({ onQuoteClick }) {
     if (isMenuOpen) {
       setIsMenuOpen(false);
       document.body.style.overflow = '';
+      // Move focus back to the menu button to avoid focused elements inside a hidden (aria-hidden/inert) container
+      if (menuButtonRef.current) {
+        try { menuButtonRef.current.focus(); } catch {}
+      }
     }
   }, [isMenuOpen]);
 
@@ -65,6 +71,17 @@ export function Header({ onQuoteClick }) {
       };
     }
   }, [isMenuOpen, scrolled, closeMobileMenu]);
+
+  // Apply `inert` to the hidden mobile menu to prevent focus retention when aria-hidden
+  useEffect(() => {
+    const node = mobileMenuRef.current;
+    if (!node) return;
+    if (!isMenuOpen) {
+      node.setAttribute('inert', '');
+    } else {
+      node.removeAttribute('inert');
+    }
+  }, [isMenuOpen]);
 
   const isActive = (href) => {
     if (href === '/') {
@@ -179,6 +196,7 @@ export function Header({ onQuoteClick }) {
                 aria-expanded={isMenuOpen}
                 aria-controls="mobile-menu"
                 aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
+                ref={menuButtonRef}
               >
                 <span className="sr-only">{isMenuOpen ? 'Close menu' : 'Open menu'}</span>
                 {isMenuOpen ? (
@@ -196,6 +214,7 @@ export function Header({ onQuoteClick }) {
           id="mobile-menu"
           className={`md:hidden transition-all duration-300 ease-in-out overflow-hidden ${isMenuOpen ? 'max-h-[80vh] opacity-100 visible' : 'max-h-0 opacity-0 invisible'}`}
           aria-hidden={!isMenuOpen}
+          ref={mobileMenuRef}
         >
           <div className="px-2 pt-2 pb-4 space-y-1 bg-black/95 backdrop-blur-sm">
             {navigation.map((item, index) => (

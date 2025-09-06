@@ -25,14 +25,29 @@ export function Button({
   variant = "default", 
   size = "default", 
   children, 
+  mobileFullWidth = true,
+  enableTouchEnhancements = true,
   ...props 
 }) {
-  const baseClasses = "inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-950 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50";
+  // Base styles prioritize accessibility and good focus states
+  const baseClasses = "inline-flex items-center justify-center select-none rounded-md text-sm font-medium ring-offset-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-600 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50";
   
   const variantClasses = buttonVariants[variant] || buttonVariants.default;
   const sizeClasses = buttonSizes[size] || buttonSizes.default;
+
+  // Mobile-first touch enhancements: larger hit area, better feedback, and optional full-width on small screens
+  const mobileTouchClasses = enableTouchEnhancements
+    ? [
+        // Ensure minimum touch target on mobile; relax on larger screens
+        "min-h-[44px] min-w-[44px] text-base sm:text-sm sm:min-h-0 sm:min-w-0",
+        // Subtle press feedback for touch devices
+        "touch-feedback active:scale-95",
+        // Make primary CTAs easier to tap by spanning width on mobile if requested
+        mobileFullWidth ? "w-full sm:w-auto" : ""
+      ].join(' ').trim()
+    : "";
   
-  const combinedClasses = `${baseClasses} ${variantClasses} ${sizeClasses} ${className}`;
+  const combinedClasses = `${baseClasses} ${variantClasses} ${sizeClasses} ${mobileTouchClasses} ${className}`.trim();
 
   return (
     <button className={combinedClasses} {...props}>

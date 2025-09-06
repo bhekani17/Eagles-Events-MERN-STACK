@@ -15,7 +15,11 @@ export const protect = asyncHandler(async (req, res, next) => {
       token = authorization.split(' ')[1];
 
       // Verify token
-      const decoded = jwt.verify(token, process.env.JWT_SECRET || 'your-secret-key');
+      if (!process.env.JWT_SECRET) {
+        res.status(500);
+        throw new Error('JWT_SECRET environment variable is required');
+      }
+      const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
       // Get admin from the token
       req.admin = await Admin.findById(decoded.id).select('-password');

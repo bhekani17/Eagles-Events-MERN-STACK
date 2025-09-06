@@ -14,7 +14,7 @@ const uploadDir = path.resolve(__dirname, '../../uploads');
 function ensureUploadsDir() {
   try {
     if (!fs.existsSync(uploadDir)) {
-      fs.mkdirSync(uploadDir, { recursive: true, mode: 0o777 });
+      fs.mkdirSync(uploadDir, { recursive: true, mode: 0o755 });
       console.log(`Created uploads directory at: ${uploadDir}`);
     }
   } catch (err) {

@@ -146,7 +146,7 @@ const packageService = {
           form.append('image', file);
           const uploadRes = await adminAPI.post('/upload', form);
           const url = uploadRes?.url || uploadRes?.data?.url;
-          if (url) uploaded.push({ url, isPrimary: i === 0 });
+          if (url) uploaded.push({ url, isPrimary: true });
         }
       }
 
@@ -159,7 +159,7 @@ const packageService = {
         payload.images = uploaded;
       } else if (packageData.images && Array.isArray(packageData.images)) {
         payload.images = packageData.images.map((u, idx) =>
-          typeof u === 'string' ? { url: u, isPrimary: idx === 0 } : u
+          typeof u === 'string' ? { url: u, isPrimary: true } : { ...u, isPrimary: true }
         );
       } else if (packageData.imageUrl) {
         payload.images = [{ url: packageData.imageUrl, isPrimary: true }];
@@ -203,7 +203,7 @@ const packageService = {
           form.append('image', file);
           const uploadRes = await adminAPI.post('/upload', form);
           const url = uploadRes?.url || uploadRes?.data?.url;
-          if (url) uploaded.push({ url, isPrimary: i === 0 });
+          if (url) uploaded.push({ url, isPrimary: true });
         }
       }
 
@@ -212,7 +212,7 @@ const packageService = {
         payload.images = uploaded;
       } else if (packageData.images && Array.isArray(packageData.images)) {
         payload.images = packageData.images.map((u, idx) =>
-          typeof u === 'string' ? { url: u, isPrimary: idx === 0 } : u
+          typeof u === 'string' ? { url: u, isPrimary: true } : { ...u, isPrimary: true }
         );
       } else if (packageData.imageUrl !== undefined) {
         // Allow clearing image by passing empty string

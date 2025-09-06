@@ -4,6 +4,7 @@ import fs from 'fs';
 import cors from 'cors';
 import mongoose from 'mongoose';
 import { uploadFile } from '../controllers/uploadController.js';
+import { uploadRateLimit } from '../middleware/rateLimiter.js';
 
 const router = express.Router();
 
@@ -21,10 +22,6 @@ router.options('*', cors());
 
 // Log all requests to this router
 router.use((req, res, next) => {
-  console.log(`[${new Date().toISOString()}] ${req.method} ${req.originalUrl}`);
-  console.log('Headers:', JSON.stringify(req.headers, null, 2));
-  console.log('Content-Type:', req.get('Content-Type'));
-  console.log('Origin:', req.get('Origin'));
   next();
 });
 
@@ -38,8 +35,7 @@ router.get('/test', (req, res) => {
 });
 
 // File upload route
-router.post('/', (req, res, next) => {
-  console.log('Upload request received. Headers:', JSON.stringify(req.headers, null, 2));
+router.post('/', uploadRateLimit, (req, res, next) => {
   uploadFile(req, res, next);
 });
 

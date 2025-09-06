@@ -33,6 +33,7 @@ export function NotificationProvider({ children, defaultPosition = 'top-right', 
   }, [defaultPosition, duration, maxToasts, remove]);
 
   const api = useMemo(() => ({
+    notify,
     success: (msg, opts) => notify('success', msg, opts),
     error: (msg, opts) => notify('error', msg, opts),
     info: (msg, opts) => notify('info', msg, opts),

@@ -4,8 +4,6 @@ import PDFDocument from 'pdfkit';
 export async function generateQuotePDF(quote) {
   return new Promise((resolve, reject) => {
     try {
-      console.log('PDF generation started for quote:', quote._id);
-      
       // Validate quote data
       if (!quote || !quote._id) {
         throw new Error('Invalid quote data provided');
@@ -21,12 +19,10 @@ export async function generateQuotePDF(quote) {
       const chunks = [];
 
       doc.on('data', (chunk) => {
-        console.log('PDF chunk received, size:', chunk.length);
         chunks.push(chunk);
       });
       doc.on('end', () => {
         const finalBuffer = Buffer.concat(chunks);
-        console.log('PDF generation completed, final buffer size:', finalBuffer.length);
         resolve(finalBuffer);
       });
       doc.on('error', (err) => {
@@ -159,7 +155,6 @@ export async function generateQuotePDF(quote) {
       addSectionHeader('Selected Items & Services:');
       
       const items = Array.isArray(quote.items) ? quote.items : [];
-      console.log('Processing items:', items.length);
       
       if (items.length > 0) {
 
@@ -186,11 +181,6 @@ export async function generateQuotePDF(quote) {
           const qty = Number(item.quantity) || 1;
           const price = Number(item.price) || 0;
           const total = qty * price;
-          
-          console.log(`Item ${index + 1}: ${item.name}, Qty: ${qty}, Price: ${price}, Total: ${total}`);
-          
-
-          
           // Simple row border
           doc.rect(50, currentY, pageWidth, 18)
             .strokeColor('#e0e0e0')
@@ -218,7 +208,6 @@ export async function generateQuotePDF(quote) {
       addSectionHeader('Cost Summary:');
       
       const totalAmount = Number(quote.totalAmount) || 0;
-      console.log('Total amount calculated:', totalAmount);
       
       doc.fontSize(14)
         .font('Helvetica-Bold')

@@ -90,18 +90,18 @@ export function Footer() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 lg:gap-5">
           {/* Brand Column */}
           <div className="sm:col-span-2 lg:col-span-1 space-y-3 lg:space-y-4">
-            <div className="flex flex-col sm:flex-row items-start space-y-3 sm:space-y-0 sm:space-x-4">
-              <div className="flex-shrink-0 w-14 h-14 sm:w-16 sm:h-16 lg:w-20 lg:h-20 bg-gold-0 rounded-lg flex items-center justify-center">
+            <div className="flex items-center space-x-3 sm:space-x-4">
+              <div className="flex-shrink-0">
                 <img 
                   src="/images/logo.png" 
                   alt="Eagles Events Logo" 
-                  className="h-20 sm:h-20 lg:h-20 w-auto" 
+                  className="h-12 sm:h-14 lg:h-16 w-auto object-contain" 
                   loading="lazy"
                 />
               </div>
-              <div className="text-center sm:text-left">
-                <h3 className="text-lg sm:text-xl lg:text-2xl font-bold text-white">Eagles Events</h3>
-                <p className="text-gold-400 text-xs sm:text-sm">Mobile Hire Services & Event Solutions</p>
+              <div className="flex-1 min-w-0">
+                <h3 className="text-lg sm:text-xl lg:text-2xl font-bold text-white leading-tight mb-1">Eagles Events</h3>
+                <p className="text-gold-400 text-xs sm:text-sm leading-tight font-medium">Mobile Hire Services & Event Solutions</p>
               </div>
             </div>
             <p className="hidden sm:block text-gray-400 text-sm leading-relaxed text-left">

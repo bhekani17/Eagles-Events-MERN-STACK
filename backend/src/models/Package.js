@@ -168,12 +168,11 @@ const packageSchema = new mongoose.Schema({
     }
 });
 
-// Virtuals for imageUrl to map to primary image in images[]
+// Virtuals for imageUrl to map to first image in images[] (since all are primary)
 packageSchema.virtual('imageUrl')
     .get(function() {
         if (Array.isArray(this.images) && this.images.length > 0) {
-            const primary = this.images.find(i => i && i.isPrimary && i.url) || this.images[0];
-            return primary?.url || '';
+            return this.images[0]?.url || '';
         }
         return '';
     })
@@ -181,13 +180,13 @@ packageSchema.virtual('imageUrl')
         if (!url) return;
         // Initialize images array if missing
         if (!Array.isArray(this.images)) this.images = [];
-        // If an entry exists, update the primary or first
+        // If an entry exists, update the first image
         if (this.images.length > 0) {
-            // Ensure exactly one primary
+            // Update first image and ensure all are primary
             this.images = this.images.map((img, idx) => ({
                 ...(img || {}),
                 url: idx === 0 ? url : (img?.url || ''),
-                isPrimary: idx === 0
+                isPrimary: true
             }));
         } else {
             this.images.push({ url, isPrimary: true });
@@ -255,18 +254,10 @@ packageSchema.pre('save', async function(next) {
         });
     }
     
-    // Ensure only one primary image
+    // Ensure all images are primary
     if (this.isModified('images') && this.images && this.images.length > 0) {
-        const primaryImages = this.images.filter(img => img.isPrimary);
-        if (primaryImages.length > 1) {
-            // Reset all to non-primary
-            this.images.forEach(img => { img.isPrimary = false; });
-            // Set first one as primary
-            this.images[0].isPrimary = true;
-        } else if (primaryImages.length === 0 && this.images.length > 0) {
-            // If no primary image, set the first one
-            this.images[0].isPrimary = true;
-        }
+        // Set all images as primary
+        this.images.forEach(img => { img.isPrimary = true; });
     }
     
     // Validate pricing tiers

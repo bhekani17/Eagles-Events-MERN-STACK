@@ -16,12 +16,6 @@ const isNotifyAdmins = () => {
 
 export const submitQuote = async (req, res) => {
   try {
-    console.log('Received quote submission:', {
-      body: req.body,
-      headers: req.headers,
-      method: req.method,
-      url: req.originalUrl
-    });
 
     const {
       customerName,
@@ -124,61 +118,20 @@ export const submitQuote = async (req, res) => {
       paymentStatus: 'pending'
     };
 
-    // Debug: Log the event type being processed
-    console.log('Event type processing:', {
-      receivedEventType: eventType,
-      finalEventType: quoteData.eventType,
-      eventTypeOther: quoteData.eventTypeOther
-    });
-
-    // Debug: Log the data being saved
-    console.log('Attempting to save quote with data:', JSON.stringify(quoteData, null, 2));
     
     // Create quote instance
     const quote = new Quote(quoteData);
 
     // Save to database
-    console.log('Saving quote to database...');
-    const savedQuote = await quote.save()
-      .then(doc => {
-        console.log('Quote saved successfully:', doc._id);
-        console.log('Final saved quote data:', {
-          id: doc._id,
-          customerName: doc.customerName,
-          eventType: doc.eventType,
-          eventTypeOther: doc.eventTypeOther,
-          totalAmount: doc.totalAmount,
-          status: doc.status,
-          reference: doc.reference
-        });
-        return doc;
-      })
-      .catch(err => {
-        console.error('Error saving quote to database:', {
-          error: err.message,
-          code: err.code,
-          name: err.name,
-          keyPattern: err.keyPattern,
-          keyValue: err.keyValue
-        });
-        throw err; // Re-throw to be caught by the outer catch block
-      });
+    const savedQuote = await quote.save();
 
     // Generate PDF once and attach to both emails
     let pdfBuffer = null;
     let pdfFileName = `Quote-${savedQuote.reference || savedQuote._id}.pdf`;
     try {
-      console.log('Starting PDF generation for quote:', savedQuote._id);
       pdfBuffer = await generateQuotePDF(savedQuote);
-      console.log('Quote PDF generated successfully, buffer size:', pdfBuffer ? pdfBuffer.length : 'null');
-      if (pdfBuffer) {
-        console.log('PDF filename:', pdfFileName);
-        console.log('PDF buffer type:', typeof pdfBuffer);
-        console.log('PDF buffer is Buffer:', Buffer.isBuffer(pdfBuffer));
-      }
     } catch (pdfErr) {
       console.error('Failed to generate quote PDF:', pdfErr);
-      console.error('PDF error stack:', pdfErr.stack);
     }
 
     // Send confirmation email (with PDF if available)

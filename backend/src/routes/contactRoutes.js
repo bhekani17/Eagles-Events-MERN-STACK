@@ -2,11 +2,12 @@ import express from 'express';
 import { sendEmail } from '../utils/emailService.js';
 import ContactMessage from '../models/contactMessage.js';
 import { protect } from '../middleware/authMiddleware.js';
+import { contactRateLimit } from '../middleware/rateLimiter.js';
 
 const router = express.Router();
 
 // POST /api/contact
-router.post('/', async (req, res) => {
+router.post('/', contactRateLimit, async (req, res) => {
   try {
     const { name, email, phone, message } = req.body || {};
 
@@ -29,13 +30,25 @@ router.post('/', async (req, res) => {
     const saved = await ContactMessage.create({ name, email, phone, message, meta });
 
     const subject = `New Website Message from ${name}`;
+    // Sanitize HTML input to prevent XSS
+    const sanitizeHtml = (str) => {
+      if (!str) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#x27;')
+        .replace(/\//g, '&#x2F;');
+    };
+
     const html = `
       <h2>New Contact Form Submission</h2>
-      <p><strong>Name:</strong> ${name}</p>
-      <p><strong>Email:</strong> ${email}</p>
-      <p><strong>Phone:</strong> ${phone || 'N/A'}</p>
+      <p><strong>Name:</strong> ${sanitizeHtml(name)}</p>
+      <p><strong>Email:</strong> ${sanitizeHtml(email)}</p>
+      <p><strong>Phone:</strong> ${sanitizeHtml(phone) || 'N/A'}</p>
       <p><strong>Message:</strong></p>
-      <p style="white-space:pre-wrap">${message}</p>
+      <p style="white-space:pre-wrap">${sanitizeHtml(message)}</p>
       <hr/>
       <p>Sent at: ${new Date().toISOString()}</p>
       <p><strong>Message ID:</strong> ${saved._id}</p>

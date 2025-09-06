@@ -44,7 +44,7 @@ export function AdminLogin() {
           // Notify context
           login(admin);
         } catch (storageErr) {
-          console.error('Failed to persist admin user:', storageErr);
+          // Silent fail for storage errors
         }
         
         // Redirect to admin dashboard
@@ -54,7 +54,6 @@ export function AdminLogin() {
       }
     } catch (err) {
       setError('Failed to connect to the server. Please try again.');
-      console.error('Login error:', err);
     } finally {
       setIsLoading(false);
     }

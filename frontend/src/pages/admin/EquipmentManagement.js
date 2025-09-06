@@ -42,7 +42,7 @@ const EquipmentManagement = () => {
     'Slaughtering Services'
   ];
 
-  // Predefined equipment templates for quick hire entry
+  // Equipment templates for quick hire entry
   const equipmentTemplates = {
     toilet: {
       name: 'VIP Mobile Toilet',
@@ -60,9 +60,9 @@ const EquipmentManagement = () => {
         'Fully sanitized before delivery'
       ],
       specifications: {
-        size: '',
-        capacity: '',
-        power: '',
+        size: '2m x 1.5m',
+        capacity: '1 person',
+        power: 'Battery operated',
         setup: 'Delivered and setup included'
       },
       images: [{ url: '', alt: '' }]
@@ -77,15 +77,15 @@ const EquipmentManagement = () => {
       isPopular: true,
       availability: true,
       features: [
-        'Medium Tent (10m x 20m) – up to 100 guests (R3,500/day)',
-        'Large Tent (15m x 30m) – up to 300 guests (R6,500/day)',
+        'Medium Tent (10m x 20m) – up to 100 guests',
+        'Large Tent (15m x 30m) – up to 300 guests',
         'Waterproof & fire-resistant material',
         'Easy setup & takedown'
       ],
       specifications: {
-        size: '',
-        capacity: '',
-        power: '',
+        size: '10m x 20m or 15m x 30m',
+        capacity: '100-300 guests',
+        power: 'Not required',
         setup: 'Professional setup included'
       },
       images: [{ url: '', alt: '' }]
@@ -105,9 +105,9 @@ const EquipmentManagement = () => {
         'Delivered and set up at your venue'
       ],
       specifications: {
-        size: '',
-        capacity: '',
-        power: '',
+        size: '1.5m x 1m x 1.2m',
+        capacity: '200L',
+        power: '220V or generator',
         setup: 'Delivered and setup included'
       },
       images: [{ url: '', alt: '' }]
@@ -116,7 +116,7 @@ const EquipmentManagement = () => {
       name: 'Slaughtering Services',
       category: 'Slaughtering Services',
       pricePerDay: 2500,
-      description: 'Professional slaughtering services with two healthy cows available. Perfect for traditional ceremonies or large gatherings.',
+      description: 'Professional slaughtering services with healthy animals available. Perfect for traditional ceremonies or large gatherings.',
       quantity: 1,
       condition: 'Good',
       isPopular: false,
@@ -127,9 +127,9 @@ const EquipmentManagement = () => {
         'Includes basic preparation'
       ],
       specifications: {
-        size: '',
-        capacity: '',
-        power: '',
+        size: 'N/A',
+        capacity: '1-2 animals',
+        power: 'Not required',
         setup: 'On-site or at our facility'
       },
       images: [{ url: '', alt: '' }]

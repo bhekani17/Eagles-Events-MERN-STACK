@@ -33,7 +33,6 @@ export const AuthProvider = ({ children }) => {
         setAdminUser(null);
       }
     } catch (error) {
-      console.error('Error checking auth status:', error);
       setIsAuthenticated(false);
       setAdminUser(null);
     } finally {

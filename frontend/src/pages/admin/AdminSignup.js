@@ -62,7 +62,6 @@ export function AdminSignup() {
         setError(response.message || 'Failed to create admin account');
       }
     } catch (err) {
-      console.error('Signup error:', err);
       setError(err.message || 'An error occurred during signup');
     } finally {
       setIsLoading(false);

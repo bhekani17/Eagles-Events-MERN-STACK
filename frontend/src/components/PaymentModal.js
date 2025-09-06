@@ -1,10 +1,10 @@
-import { useState } from 'react';
+import { useState, useMemo, memo } from 'react';
 import { X, ArrowLeft, Banknote, CheckCircle, Mail, Building } from 'lucide-react';
 import { publicAPI } from '../services/api';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-export function PaymentModal({ isOpen, onClose, quoteData, onSuccess, onBack }) {
+const PaymentModal = memo(function PaymentModal({ isOpen, onClose, quoteData, onSuccess, onBack }) {
   const [selectedPayment, setSelectedPayment] = useState('');
   const [isProcessing, setIsProcessing] = useState(false);
   const [isComplete, setIsComplete] = useState(false);
@@ -30,7 +30,7 @@ export function PaymentModal({ isOpen, onClose, quoteData, onSuccess, onBack }) 
     onClose();
   };
 
-  const calculateTotal = () => {
+  const calculateTotal = useMemo(() => {
     if (quoteData?.selectedItems && quoteData.selectedItems.length > 0) {
       // Sum price x quantity for each item
       return quoteData.selectedItems.reduce(
@@ -39,9 +39,9 @@ export function PaymentModal({ isOpen, onClose, quoteData, onSuccess, onBack }) 
       );
     }
     return 0;
-  };
+  }, [quoteData?.selectedItems]);
 
-  const paymentOptions = [
+  const paymentOptions = useMemo(() => [
     {
       id: 'eft',
       name: 'Electronic Funds Transfer (EFT)',
@@ -56,7 +56,7 @@ export function PaymentModal({ isOpen, onClose, quoteData, onSuccess, onBack }) 
       icon: Banknote,
       popular: false
     }
-  ];
+  ], []);
 
   const handleSubmitPayment = async (e) => {
     e.preventDefault();
@@ -111,7 +111,7 @@ export function PaymentModal({ isOpen, onClose, quoteData, onSuccess, onBack }) 
           quantity: parseInt(item.quantity, 10) || 1,
           price: parseFloat(item.price) || 0
         })),
-        totalAmount: calculateTotal(),
+        totalAmount: calculateTotal,
         paymentMethod: normalizePaymentMethod(selectedPayment),
         notes: quoteData.message
       };
@@ -386,7 +386,7 @@ export function PaymentModal({ isOpen, onClose, quoteData, onSuccess, onBack }) 
 
                   <div className="flex justify-between text-lg font-bold border-t pt-2 mt-4">
                     <span>Total Estimate:</span>
-                    <span className="text-gold-600">R{calculateTotal().toLocaleString()}</span>
+                    <span className="text-gold-600">R{calculateTotal.toLocaleString()}</span>
                   </div>
                 </div>
               </div>
@@ -396,4 +396,6 @@ export function PaymentModal({ isOpen, onClose, quoteData, onSuccess, onBack }) 
       </div>
     </div>
   );
-}
+});
+
+export { PaymentModal };

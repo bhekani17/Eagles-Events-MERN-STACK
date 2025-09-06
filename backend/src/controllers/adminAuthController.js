@@ -11,13 +11,6 @@ export const registerAdmin = async (req, res) => {
   try {
     const { name, email, password } = req.body;
 
-    // Prevent demo/test admin accounts
-    if (email.toLowerCase().includes('demo') || email.toLowerCase().includes('test')) {
-      return res.status(400).json({
-        success: false,
-        message: 'Demo/Test admin accounts are not allowed'
-      });
-    }
 
     // Check if admin already exists
     const adminExists = await Admin.findOne({ email });
@@ -69,32 +62,19 @@ export const registerAdmin = async (req, res) => {
 // @access  Public
 export const loginAdmin = async (req, res) => {
   try {
-    console.log('Login request received:', { email: req.body.email });
     const { email, password } = req.body;
 
     if (!email || !password) {
-      console.log('Missing email or password');
       return res.status(400).json({
         success: false,
         message: 'Please provide both email and password'
       });
     }
 
-    // Prevent demo/test admin logins
-    if (email.toLowerCase().includes('demo') || email.toLowerCase().includes('test')) {
-      console.log('Attempted login with demo/test email:', email);
-      return res.status(401).json({
-        success: false,
-        message: 'Access denied'
-      });
-    }
-
     // Check for admin
     const admin = await Admin.findOne({ email }).select('+password');
-    console.log('Admin found:', admin ? 'Yes' : 'No');
 
     if (!admin) {
-      console.log('No admin found with email:', email);
       return res.status(401).json({
         success: false,
         message: 'Invalid credentials'
@@ -102,19 +82,14 @@ export const loginAdmin = async (req, res) => {
     }
 
     // Check password
-    console.log('Checking password...');
     const isMatch = await admin.matchPassword(password);
-    console.log('Password match:', isMatch);
 
     if (!isMatch) {
-      console.log('Password does not match');
       return res.status(401).json({
         success: false,
         message: 'Invalid credentials'
       });
     }
-    
-    console.log('Password verified successfully');
 
     // Generate JWT token
     const token = jwt.sign(

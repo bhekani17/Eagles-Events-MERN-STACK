@@ -1,8 +1,3 @@
-export const DEMO_CREDENTIALS = {
-  email: 'admin@eaglesevents.com',
-  password: 'eagles2024'
-};
-
 export const ADMIN_ROUTES = [
   { path: '/admin/dashboard', label: 'Dashboard' },
   { path: '/admin/equipment', label: 'Equipment' },

@@ -195,7 +195,7 @@ function AppContent() {
 
   // Centralized routes tree to avoid duplication across animated/non-animated branches
   const RoutesTree = () => (
-    <Routes location={location} future={{ v7_relativeSplatPath: true }}>
+    <Routes location={location} future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
       <Route path="/" element={<HomePage onQuoteClick={openQuoteModal} onOpenFeedback={() => setIsFeedbackOpen(true)} />} />
       <Route path="/hire" element={
         <Suspense fallback={<PageLoader />}>
@@ -237,7 +237,7 @@ function AppContent() {
         <ProtectedRoute>
           <Suspense fallback={<PageLoader />}>
             <AdminLayout>
-              <Routes future={{ v7_relativeSplatPath: true }}>
+              <Routes future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
                 <Route path="/" element={
                   <Suspense fallback={<PageLoader />}>
                     <AdminDashboard />

@@ -144,6 +144,11 @@ export const updatePackage = async (req, res) => {
         }
       }
 
+      // Ensure all images in the images array are primary
+      if (update.images && Array.isArray(update.images)) {
+        update.images = update.images.map(img => ({ ...img, isPrimary: true }));
+      }
+
       const updatedPackage = await Package.findByIdAndUpdate(
         req.params.id,
         update,
