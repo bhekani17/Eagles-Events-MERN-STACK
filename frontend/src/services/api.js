@@ -1,5 +1,5 @@
 // API Base URL (using environment variable)
-const API_BASE_URL = process.env.REACT_APP_API_URL || 'https://backend-g983.onrender.com';
+const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5003';
 
 // Token management
 const TOKEN_KEY = 'adminToken';

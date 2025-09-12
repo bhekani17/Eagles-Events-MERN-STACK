@@ -1,6 +1,4 @@
-import { memo, useState, useCallback } from 'react';
-import { LazyLoadImage } from 'react-lazy-load-image-component';
-import 'react-lazy-load-image-component/src/effects/opacity.css';
+import React, { memo, useState, useCallback } from 'react';
 
 const OptimizedImage = memo(function OptimizedImage({
   src,
@@ -26,17 +24,12 @@ const OptimizedImage = memo(function OptimizedImage({
   const imageSrc = imageError ? placeholder : src;
 
   return (
-    <LazyLoadImage
+    <img
       src={imageSrc}
       alt={alt}
       className={`transition-opacity duration-300 ${imageLoaded ? 'opacity-100' : 'opacity-0'} ${className}`}
-      effect={effect}
-      threshold={threshold}
       onError={handleError}
       onLoad={handleLoad}
-      placeholderSrc={placeholder}
-      loading="lazy"
-      decoding="async"
       {...props}
     />
   );

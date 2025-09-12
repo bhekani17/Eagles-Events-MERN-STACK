@@ -116,13 +116,7 @@ const PaymentModal = memo(function PaymentModal({ isOpen, onClose, quoteData, on
         notes: quoteData.message
       };
 
-      // Debug: Log what's being sent to backend
-      console.log('Frontend - Quote data being submitted:', {
-        originalEventType: quoteData.eventType,
-        submittedEventType: quoteDataToSubmit.eventType,
-        eventTypeOther: quoteDataToSubmit.eventTypeOther,
-        fullData: quoteDataToSubmit
-      });
+      // Prepare quote data for submission
 
       // Submit quote using the publicAPI.submitQuote method
       const response = await publicAPI.submitQuote(quoteDataToSubmit);

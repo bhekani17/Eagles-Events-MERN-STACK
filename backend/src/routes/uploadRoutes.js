@@ -25,14 +25,7 @@ router.use((req, res, next) => {
   next();
 });
 
-// Test route to check if API is accessible
-router.get('/test', (req, res) => {
-  res.json({ 
-    status: 'upload test route working',
-    timestamp: new Date().toISOString(),
-    headers: req.headers
-  });
-});
+// Test route removed for production
 
 // File upload route
 router.post('/', uploadRateLimit, (req, res, next) => {
@@ -88,56 +81,6 @@ router.get('/files/:id', async (req, res) => {
   }
 });
 
-// Test route to check if uploads directory is writable
-router.get('/disk-test', (req, res) => {
-  const testDir = path.join(process.cwd(), 'uploads');
-  const testFilePath = path.join(testDir, 'test.txt');
-  
-  // Ensure directory exists
-  if (!fs.existsSync(testDir)) {
-    fs.mkdirSync(testDir, { recursive: true });
-  }
-  
-  fs.writeFile(testFilePath, 'test', (err) => {
-    if (err) {
-      console.error('Write test failed:', err);
-      return res.status(500).json({ 
-        success: false, 
-        message: 'Failed to write test file',
-        error: err.message,
-        path: testFilePath,
-        cwd: process.cwd(),
-        dirExists: fs.existsSync(testDir)
-      });
-    }
-    
-    // Test reading the file
-    fs.readFile(testFilePath, 'utf8', (readErr, data) => {
-      if (readErr) {
-        console.error('Read test failed:', readErr);
-        return res.status(500).json({
-          success: false,
-          message: 'Failed to read test file',
-          error: readErr.message
-        });
-      }
-      
-      // Clean up
-      fs.unlink(testFilePath, (unlinkErr) => {
-        if (unlinkErr) {
-          console.error('Failed to clean up test file:', unlinkErr);
-        }
-        
-        res.json({
-          success: true,
-          message: 'Disk test successful',
-          fileContent: data,
-          path: testFilePath,
-          cwd: process.cwd()
-        });
-      });
-    });
-  });
-});
+// Test route removed for production
 
 export default router;

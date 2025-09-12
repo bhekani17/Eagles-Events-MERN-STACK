@@ -180,7 +180,6 @@ export function CustomerManagement() {
       await adminAPI.deleteCustomer(customer._id);
       await fetchCustomers();
       // Show success message or notification
-      console.log(`Customer "${customer.name}" deleted successfully`);
     } catch (err) {
       console.error('Failed to delete customer:', err);
       setError('Failed to delete customer. Please try again.');

@@ -1,7 +1,5 @@
+import React, { useEffect, useState, useCallback, useMemo, useRef } from 'react';
 import { Button } from './ui/button';
-import { LazyLoadImage } from 'react-lazy-load-image-component';
-import 'react-lazy-load-image-component/src/effects/opacity.css';
-import { useEffect, useState, useCallback, useMemo, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 // Inlined ImageCarousel to reduce component count
@@ -162,15 +160,10 @@ function ImageCarousel({ slides, onQuoteClick, onHireClick, autoPlay = true, int
                 ? images[index === currentSlide ? (currentInnerIndex % images.length) : 0]
                 : '/images/placeholder.jpg';
               return (
-                <LazyLoadImage
+                <img
                   src={imgSrc}
                   alt={slide.title}
                   className="w-full h-full object-cover"
-                  effect="opacity"
-                  width="100%"
-                  height="100%"
-                  loading="lazy"
-                  placeholderSrc="/images/placeholder.jpg"
                 />
               );
             })()}
@@ -284,14 +277,10 @@ export function Hero({ onQuoteClick }) {
             isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-8'
           }`}
         >
-          <LazyLoadImage
+          <img
             src="/images/logo.png"
             alt="Eagles Events Logo"
             className="h-20 sm:h-28 md:h-32 lg:h-36 w-auto drop-shadow-2xl hover:scale-105 transition-transform duration-500 ease-in-out"
-            effect="opacity"
-            loading="eager"
-            height="auto"
-            width="auto"
           />
         </div>
       </div>

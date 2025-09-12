@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Menu, X, Phone, Mail } from 'lucide-react';
 import { CONTACT } from '../config/contact';
@@ -139,7 +139,6 @@ export function Header({ onQuoteClick }) {
                     className="h-10 w-auto md:h-12" 
                     width="48"
                     height="48"
-                    loading="lazy"
                   />
                 </div>
                 <div className="hidden sm:block">

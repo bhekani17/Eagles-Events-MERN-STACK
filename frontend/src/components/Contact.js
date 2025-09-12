@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { publicAPI } from '../services/api';
 import { Phone, Mail, MapPin, Clock, MessageCircle } from 'lucide-react';
 import { CONTACT } from '../config/contact';
@@ -240,7 +240,6 @@ export function Contact({ onQuoteClick }) {
                   height="100%"
                   style={{ border: 0 }}
                   allowFullScreen=""
-                  loading="lazy"
                   referrerPolicy="no-referrer-when-downgrade"
                 />
               </div>

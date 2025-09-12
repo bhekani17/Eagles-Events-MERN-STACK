@@ -1,3 +1,4 @@
+import React from 'react';
 import { Award, Users, Clock, Shield } from 'lucide-react';
 import { Button } from './ui/button';
 
@@ -34,8 +35,6 @@ export function About({ onQuoteClick }) {
           alt=""
           className="w-full h-full object-cover"
           aria-hidden="true"
-          loading="lazy"
-          decoding="async"
         />
         {/* Dark overlay for readability */}
         <div className="absolute inset-0 bg-black/60" />
@@ -47,8 +46,6 @@ export function About({ onQuoteClick }) {
             src="/images/logo.png"
             alt="Eagles Events Logo"
             className="mx-auto h-16 sm:h-20 md:h-24 w-auto mb-4 drop-shadow-2xl"
-            loading="lazy"
-            decoding="async"
           />
           <h2 className="text-4xl font-bold text-white mb-4">
             About Eagles Events
@@ -111,8 +108,6 @@ export function About({ onQuoteClick }) {
             src="/images/t6.webp"
             alt="Event background"
             className="absolute inset-0 w-full h-full object-cover filter grayscale"
-            loading="lazy"
-            decoding="async"
             sizes="100vw"
           />
           {/* Dark overlay for readability */}

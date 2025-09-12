@@ -338,8 +338,6 @@ export function PackagesPage({ onQuoteClick }) {
                     src={images[modalImageIndex]}
                     alt={`${selectedPackage.name} ${modalImageIndex + 1}`}
                     className="w-full h-40 sm:h-64 md:h-72 object-cover select-none"
-                    loading="lazy"
-                    decoding="async"
                     onTouchStart={(e) => setTouchStartX(e.changedTouches[0].clientX)}
                     onTouchMove={(e) => {
                       if (touchStartX == null) return;
@@ -412,7 +410,7 @@ export function PackagesPage({ onQuoteClick }) {
                                 className={`relative aspect-[4/3] rounded-md overflow-hidden border ${i === modalImageIndex ? 'border-gold-500 ring-1 ring-gold-500' : 'border-gray-200 hover:border-gray-300'}`}
                                 aria-label={`View image ${i + 1}`}
                               >
-                                <img src={src} alt="" className="w-full h-full object-cover" loading="lazy" decoding="async" />
+                                <img src={src} alt="" className="w-full h-full object-cover" />
                                 {isLastWithOverlay && (
                                   <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
                                     <span className="text-white text-xs font-semibold px-2 py-1 rounded-full bg-black/60">

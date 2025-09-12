@@ -1,6 +1,6 @@
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Phone, Mail, MapPin, Facebook, Instagram, Linkedin, ChevronDown, ChevronUp, ExternalLink } from 'lucide-react';
-import { useState } from 'react';
 import { CONTACT } from '../config/contact';
 
 function FooterSection({ title, children }) {
@@ -96,7 +96,6 @@ export function Footer() {
                   src="/images/logo.png" 
                   alt="Eagles Events Logo" 
                   className="h-12 sm:h-14 lg:h-16 w-auto object-contain" 
-                  loading="lazy"
                 />
               </div>
               <div className="flex-1 min-w-0">

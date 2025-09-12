@@ -459,8 +459,6 @@ export const PackagesManagement = () => {
               src={images[0].url} 
               alt={pkg?.name || ''} 
               className="w-full h-full object-cover" 
-              loading="lazy" 
-              decoding="async"
               onError={(e) => {
                 e.target.src = '/images/aux.jpg';
               }}
@@ -474,8 +472,6 @@ export const PackagesManagement = () => {
                   src={im.url} 
                   alt={pkg?.name || ''} 
                   className="w-full h-full object-cover" 
-                  loading="lazy" 
-                  decoding="async"
                   onError={(e) => {
                     e.target.src = '/images/aux.jpg';
                   }}
@@ -490,8 +486,6 @@ export const PackagesManagement = () => {
                   src={images[0].url} 
                   alt={pkg?.name || ''} 
                   className="w-full h-full object-cover" 
-                  loading="lazy" 
-                  decoding="async"
                   onError={(e) => {
                     e.target.src = '/images/aux.jpg';
                   }}
@@ -502,8 +496,6 @@ export const PackagesManagement = () => {
                   src={images[1].url} 
                   alt={pkg?.name || ''} 
                   className="w-full h-full object-cover" 
-                  loading="lazy" 
-                  decoding="async"
                   onError={(e) => {
                     e.target.src = '/images/aux.jpg';
                   }}
@@ -513,8 +505,6 @@ export const PackagesManagement = () => {
                     src={images[2].url} 
                     alt={pkg?.name || ''} 
                     className="w-full h-full object-cover" 
-                    loading="lazy" 
-                    decoding="async"
                     onError={(e) => {
                       e.target.src = '/images/aux.jpg';
                     }}
@@ -731,134 +721,8 @@ export const PackagesManagement = () => {
     return matchesSearch && matchesCategory && matchesPopular && matchesFeatured;
   });
 
-  // Package templates for quick creation
-  const packageTemplates = [
-    {
-      key: 'wedding_starter',
-      label: 'Wedding Starter',
-      data: {
-        name: 'Wedding Starter Package',
-        category: 'wedding',
-        price: 1999,
-        priceUnit: 'R',
-        description: 'Essential setup for intimate weddings. Perfect for small venues and intimate ceremonies.',
-        features: [
-          'Compact sound system',
-          '1 wireless microphone',
-          'Basic lighting setup',
-          'Setup & teardown included',
-          'Up to 3 hours service'
-        ],
-        isPopular: true,
-        isFeatured: false
-      }
-    },
-    {
-      key: 'wedding_premium',
-      label: 'Wedding Premium',
-      data: {
-        name: 'Wedding Premium Package',
-        category: 'wedding',
-        price: 5499,
-        priceUnit: 'R',
-        description: 'Full-featured package for large weddings with professional coverage and effects.',
-        features: [
-          'Professional sound system',
-          '2+ wireless microphones',
-          'Full lighting rig',
-          'DJ & MC service',
-          'Special effects (haze/FX)',
-          'On-site technician',
-          'Up to 8 hours service'
-        ],
-        isPopular: true,
-        isFeatured: true
-      }
-    },
-    {
-      key: 'corporate_standard',
-      label: 'Corporate Standard',
-      data: {
-        name: 'Corporate Standard Package',
-        category: 'corporate',
-        price: 3999,
-        priceUnit: 'R',
-        description: 'Professional AV for meetings and presentations.',
-        features: [
-          '2 speakers + mixer',
-          '2 wireless handheld mics',
-          'Podium mic (optional)',
-          'Laptop audio integration',
-          'Basic stage wash lighting',
-          'Up to 4 hours on-site'
-        ],
-        isPopular: true,
-        isFeatured: false
-      }
-    },
-    {
-      key: 'birthday_basic',
-      label: 'Birthday Basic',
-      data: {
-        name: 'Birthday Basic Package',
-        category: 'birthday',
-        price: 1499,
-        priceUnit: 'R',
-        description: 'Fun and affordable setup for birthday celebrations.',
-        features: [
-          'Portable sound system',
-          '1 wireless microphone',
-          'Party lighting effects',
-          'Music playlist support',
-          'Up to 3 hours service'
-        ],
-        isPopular: true,
-        isFeatured: false
-      }
-    },
-    {
-      key: 'conference_premium',
-      label: 'Conference Premium',
-      data: {
-        name: 'Conference Premium Package',
-        category: 'conference',
-        price: 5999,
-        priceUnit: 'R',
-        description: 'Advanced conference setup with enhanced features for important presentations.',
-        features: [
-          '4 speakers + advanced mixer',
-          '3 wireless mics + podium',
-          'Projector/screen setup',
-          'Video recording capability',
-          'Professional lighting',
-          'Full-day support'
-        ],
-        isPopular: false,
-        isFeatured: true
-      }
-    },
-    {
-      key: 'anniversary_luxury',
-      label: 'Anniversary Luxury',
-      data: {
-        name: 'Anniversary Luxury Package',
-        category: 'anniversary',
-        price: 4499,
-        priceUnit: 'R',
-        description: 'Luxury anniversary celebration with premium features.',
-        features: [
-          'High-end sound system',
-          '2 wireless microphones',
-          'Elegant lighting design',
-          'Live music support',
-          'Special effects',
-          'Up to 6 hours service'
-        ],
-        isPopular: false,
-        isFeatured: true
-      }
-    }
-  ];
+  // Package templates for quick creation - removed for production
+  const packageTemplates = [];
 
   const applyTemplate = (tpl) => {
     if (!tpl || !tpl.data) return;
@@ -1361,7 +1225,7 @@ export const PackagesManagement = () => {
                               });
                             }}
                           >
-                            <img src={im.url} alt="" className="w-full h-16 object-cover" loading="lazy" decoding="async" />
+                            <img src={im.url} alt="" className="w-full h-16 object-cover" />
                             <div className="absolute inset-x-0 bottom-0 flex justify-between p-1 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity">
                               <button
                                 type="button"

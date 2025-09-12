@@ -3,8 +3,6 @@ import { Truck, Snowflake, Tent, Utensils, Loader2, AlertCircle, Search as Searc
 import { equipmentService } from '../services/equipmentService';
 import { formatCurrency } from '../utils/helpers';
 import { motion, AnimatePresence } from 'framer-motion';
-import { LazyLoadImage } from 'react-lazy-load-image-component';
-import 'react-lazy-load-image-component/src/effects/opacity.css';
 import { CONTACT } from '../config/contact';
 
 // Define prop types for better type checking
@@ -309,14 +307,10 @@ export const HirePage = ({ onQuoteClick }) => {
                               if (imgs.length === 1) {
                                 const img = imgs[0];
                                 return (
-                                  <LazyLoadImage
+                                  <img
                                     src={img.url}
                                     alt={img.alt || item.name}
-                                    effect="opacity"
-                                    width="100%"
-                                    height="100%"
                                     className="w-full h-full object-cover"
-                                    placeholderSrc={img.url}
                                   />
                                 );
                               }
@@ -324,15 +318,11 @@ export const HirePage = ({ onQuoteClick }) => {
                                 return (
                                   <div className="grid grid-cols-2 gap-0.5 w-full h-full">
                                     {imgs.map((im, i) => (
-                                      <LazyLoadImage
+                                      <img
                                         key={i}
                                         src={im.url}
                                         alt={im.alt || item.name}
-                                        effect="opacity"
-                                        width="100%"
-                                        height="100%"
                                         className="w-full h-full object-cover"
-                                        placeholderSrc={imgs[0].url}
                                       />
                                     ))}
                                   </div>
@@ -342,35 +332,23 @@ export const HirePage = ({ onQuoteClick }) => {
                               return (
                                 <div className="grid grid-cols-3 gap-0.5 w-full h-full">
                                   <div className="col-span-2 h-full">
-                                    <LazyLoadImage
+                                    <img
                                       src={imgs[0].url}
                                       alt={imgs[0].alt || item.name}
-                                      effect="opacity"
-                                      width="100%"
-                                      height="100%"
                                       className="w-full h-full object-cover"
-                                      placeholderSrc={imgs[0].url}
                                     />
                                   </div>
                                   <div className="col-span-1 grid grid-rows-2 gap-0.5 h-full">
-                                    <LazyLoadImage
+                                    <img
                                       src={imgs[1].url}
                                       alt={imgs[1].alt || item.name}
-                                      effect="opacity"
-                                      width="100%"
-                                      height="100%"
                                       className="w-full h-full object-cover"
-                                      placeholderSrc={imgs[0].url}
                                     />
                                     <div className="relative">
-                                      <LazyLoadImage
+                                      <img
                                         src={imgs[2].url}
                                         alt={imgs[2].alt || item.name}
-                                        effect="opacity"
-                                        width="100%"
-                                        height="100%"
                                         className="w-full h-full object-cover"
-                                        placeholderSrc={imgs[0].url}
                                       />
                                       {item.images.length > 3 && (
                                         <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
@@ -467,6 +445,42 @@ export const HirePage = ({ onQuoteClick }) => {
                                   title={`${item.features.length - 3} more features`}
                                 >
                                   +{item.features.length - 3}
+                                </span>
+                              )}
+                            </div>
+                          </div>
+                        )}
+                        
+                        {/* Specifications */}
+                        {item.specifications && Object.values(item.specifications).some(spec => spec && spec.trim()) && (
+                          <div className="mb-2.5 sm:mb-3">
+                            <div className="flex flex-wrap gap-1.5">
+                              {Object.entries(item.specifications)
+                                .filter(([key, value]) => value && value.trim())
+                                .slice(0, 3)
+                                .map(([key, value], index) => (
+                                <span 
+                                  key={key}
+                                  className={`inline-flex items-center px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full text-xs font-medium bg-blue-50 text-blue-700 border border-blue-100 hover:bg-blue-100 transition-colors ${index >= 1 ? 'hidden sm:inline-flex' : ''}`}
+                                  title={`${key}: ${value}`}
+                                >
+                                  {value.length > 15 ? `${value.substring(0, 15)}...` : value}
+                                </span>
+                              ))}
+                              {Object.values(item.specifications).filter(spec => spec && spec.trim()).length > 1 && (
+                                <span 
+                                  className="inline-flex sm:hidden items-center px-2 py-0.5 rounded-full text-[11px] font-medium bg-white text-blue-500 border border-blue-200 hover:bg-blue-50 transition-colors"
+                                  title={`${Object.values(item.specifications).filter(spec => spec && spec.trim()).length - 1} more specifications`}
+                                >
+                                  +{Object.values(item.specifications).filter(spec => spec && spec.trim()).length - 1}
+                                </span>
+                              )}
+                              {Object.values(item.specifications).filter(spec => spec && spec.trim()).length > 3 && (
+                                <span 
+                                  className="hidden sm:inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-white text-blue-500 border border-blue-200 hover:bg-blue-50 transition-colors"
+                                  title={`${Object.values(item.specifications).filter(spec => spec && spec.trim()).length - 3} more specifications`}
+                                >
+                                  +{Object.values(item.specifications).filter(spec => spec && spec.trim()).length - 3}
                                 </span>
                               )}
                             </div>
@@ -700,6 +714,20 @@ export const HirePage = ({ onQuoteClick }) => {
                         {infoItem.features.slice(0, 6).map((f, i) => (
                           <span key={i} className="px-2 py-0.5 rounded-full text-xs bg-gray-50 border border-gray-200 text-gray-700">{f}</span>
                         ))}
+                      </div>
+                    </div>
+                  )}
+                  {infoItem.specifications && Object.values(infoItem.specifications).some(spec => spec && spec.trim()) && (
+                    <div className="mb-3">
+                      <h4 className="text-sm font-semibold text-gray-900 mb-1">Specifications</h4>
+                      <div className="flex flex-wrap gap-1.5">
+                        {Object.entries(infoItem.specifications)
+                          .filter(([key, value]) => value && value.trim())
+                          .map(([key, value]) => (
+                            <span key={key} className="px-2 py-0.5 rounded-full text-xs bg-blue-50 border border-blue-200 text-blue-700" title={`${key}: ${value}`}>
+                              {value}
+                            </span>
+                          ))}
                       </div>
                     </div>
                   )}

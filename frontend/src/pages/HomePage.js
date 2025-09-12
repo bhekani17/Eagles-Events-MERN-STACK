@@ -1,11 +1,11 @@
 
+import React, { useEffect, useRef, useState } from 'react';
 import { Hero } from '../components/Hero';
 import { Services } from '../components/Services';
 import { About } from '../components/About';
 import { Contact } from '../components/Contact';
 import { EventTypes } from '../components/EventTypes';
 import { Star, Facebook, Instagram, Globe } from 'lucide-react';
-import { useEffect, useRef, useState } from 'react';
 import { publicAPI } from '../services/api';
 
 // Inlined Reviews component to reduce component count

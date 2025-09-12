@@ -42,101 +42,7 @@ const EquipmentManagement = () => {
     'Slaughtering Services'
   ];
 
-  // Equipment templates for quick hire entry
-  const equipmentTemplates = {
-    toilet: {
-      name: 'VIP Mobile Toilet',
-      category: 'Mobile Toilets',
-      pricePerDay: 1500,
-      description: 'Modern, stylish, and fully serviced mobile toilet for comfort and hygiene at any event. Perfect for weddings, corporate events, or VIP areas.',
-      quantity: 1,
-      condition: 'Good',
-      isPopular: true,
-      availability: true,
-      features: [
-        'Flushable toilet & handwashing basin',
-        'Interior lighting & mirror',
-        'Ventilation for fresh air',
-        'Fully sanitized before delivery'
-      ],
-      specifications: {
-        size: '2m x 1.5m',
-        capacity: '1 person',
-        power: 'Battery operated',
-        setup: 'Delivered and setup included'
-      },
-      images: [{ url: '', alt: '' }]
-    },
-    tents: {
-      name: 'Event Tents',
-      category: 'Tents & Marquees',
-      pricePerDay: 3500,
-      description: 'High-quality tents to protect your guests from sun and rain. Available in different sizes for small or large events.',
-      quantity: 1,
-      condition: 'Good',
-      isPopular: true,
-      availability: true,
-      features: [
-        'Medium Tent (10m x 20m) – up to 100 guests',
-        'Large Tent (15m x 30m) – up to 300 guests',
-        'Waterproof & fire-resistant material',
-        'Easy setup & takedown'
-      ],
-      specifications: {
-        size: '10m x 20m or 15m x 30m',
-        capacity: '100-300 guests',
-        power: 'Not required',
-        setup: 'Professional setup included'
-      },
-      images: [{ url: '', alt: '' }]
-    },
-    freezer: {
-      name: 'Mobile Freezer',
-      category: 'Mobile Freezers',
-      pricePerDay: 1800,
-      description: 'Keep your food and drinks perfectly chilled with our portable freezer units. Ideal for weddings, family gatherings, or corporate events.',
-      quantity: 1,
-      condition: 'Good',
-      isPopular: true,
-      availability: true,
-      features: [
-        'Spacious interior for beverages & meat',
-        'Energy-efficient and portable',
-        'Delivered and set up at your venue'
-      ],
-      specifications: {
-        size: '1.5m x 1m x 1.2m',
-        capacity: '200L',
-        power: '220V or generator',
-        setup: 'Delivered and setup included'
-      },
-      images: [{ url: '', alt: '' }]
-    },
-    slaughter: {
-      name: 'Slaughtering Services',
-      category: 'Slaughtering Services',
-      pricePerDay: 2500,
-      description: 'Professional slaughtering services with healthy animals available. Perfect for traditional ceremonies or large gatherings.',
-      quantity: 1,
-      condition: 'Good',
-      isPopular: false,
-      availability: true,
-      features: [
-        'Experienced and hygienic staff',
-        'Slaughtering at your location or ours',
-        'Includes basic preparation'
-      ],
-      specifications: {
-        size: 'N/A',
-        capacity: '1-2 animals',
-        power: 'Not required',
-        setup: 'On-site or at our facility'
-      },
-      images: [{ url: '', alt: '' }]
-    }
-  };
-
-  const [selectedTemplate, setSelectedTemplate] = useState('toilet');
+  // Equipment templates for quick hire entry - removed for production
 
   // Build axios config with Authorization header if token exists
   const buildAuthConfig = (extra = {}) => {
@@ -180,7 +86,24 @@ const EquipmentManagement = () => {
 
   // Reset form to initial state
   const resetForm = () => {
-    setFormData(equipmentTemplates[selectedTemplate]);
+    setFormData({
+      name: '',
+      category: 'Mobile Toilets',
+      pricePerDay: '',
+      description: '',
+      quantity: 1,
+      condition: 'Good',
+      isPopular: false,
+      availability: true,
+      features: [],
+      specifications: {
+        size: '',
+        capacity: '',
+        power: '',
+        setup: ''
+      },
+      images: [{ url: '', alt: '' }]
+    });
     setEditingEquipment(null);
   };
 
@@ -486,8 +409,7 @@ const EquipmentManagement = () => {
       <div className="flex justify-between items-center mb-6">
         <button
           onClick={() => {
-            setFormData(equipmentTemplates[selectedTemplate]);
-            setEditingEquipment(null);
+            resetForm();
             setShowModal(true);
           }}
           className="bg-amber-400 text-black px-4 py-2 rounded-md hover:bg-amber-300 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 flex items-center gap-2"
@@ -604,8 +526,6 @@ const EquipmentManagement = () => {
                     src={item.images[0].url} 
                     alt={item.images[0].alt || item.name}
                     className="w-full h-full object-cover"
-                    loading="lazy"
-                    decoding="async"
                     sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                   />
                 ) : (
@@ -694,26 +614,7 @@ const EquipmentManagement = () => {
                 <X className="w-6 h-6" />
               </button>
             </div>
-            {/* Template Selector */}
-            {!editingEquipment && (
-              <div className="px-6 pt-4">
-                <label className="block text-sm font-medium text-gray-700 mb-1">Quick Template</label>
-                <select
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-amber-500 focus:border-amber-500"
-                  value={selectedTemplate}
-                  onChange={(e) => {
-                    const key = e.target.value;
-                    setSelectedTemplate(key);
-                    setFormData(equipmentTemplates[key]);
-                  }}
-                >
-                  <option value="toilet">VIP Mobile Toilet</option>
-                  <option value="tents">Tents</option>
-                  <option value="freezer">Mobile Freezer</option>
-                  <option value="slaughter">Slaughtering Services</option>
-                </select>
-              </div>
-            )}
+            {/* Template Selector - Removed for production */}
 
             <form onSubmit={handleSubmit} className="p-6 space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

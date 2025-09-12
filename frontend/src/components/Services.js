@@ -1,4 +1,5 @@
-import { Truck, Gift, Utensils, Settings, ArrowRight, CheckCircle, Star } from 'lucide-react';
+import React from 'react';
+import { Truck, Gift, Utensils, Settings, ArrowRight, CheckCircle } from 'lucide-react';
 import { Button } from './ui/button';
 import { useNavigate } from 'react-router-dom';
 
@@ -16,8 +17,6 @@ export function Services({ onQuoteClick }) {
       gradient: 'from-blue-500 to-purple-600',
       iconBg: 'bg-blue-100',
       iconColor: 'text-blue-600',
-      rating: 4.9,
-      reviews: 127,
       navigateTo: '/hire',
       buttonText: 'View Equipment'
     },
@@ -31,8 +30,6 @@ export function Services({ onQuoteClick }) {
       gradient: 'from-emerald-500 to-teal-600',
       iconBg: 'bg-emerald-100',
       iconColor: 'text-emerald-600',
-      rating: 4.8,
-      reviews: 89,
       navigateTo: '/packages',
       buttonText: 'View Packages'
     },
@@ -46,8 +43,6 @@ export function Services({ onQuoteClick }) {
       gradient: 'from-red-500 to-orange-600',
       iconBg: 'bg-red-100',
       iconColor: 'text-red-600',
-      rating: 4.9,
-      reviews: 156,
       navigateTo: '/hire',
       buttonText: 'Hire Service'
     },
@@ -61,15 +56,13 @@ export function Services({ onQuoteClick }) {
       gradient: 'from-purple-500 to-pink-600',
       iconBg: 'bg-purple-100',
       iconColor: 'text-purple-600',
-      rating: 4.7,
-      reviews: 98,
       navigateTo: '/hire',
       buttonText: 'Hire Service'
     }
   ];
 
   return (
-    <section id="services" className="relative py-16 sm:py-20 lg:py-24 overflow-hidden">
+    <section id="services" className="relative py-8 sm:py-12 lg:py-16 overflow-hidden">
       {/* Background Images and Patterns */}
       <div className="absolute inset-0 bg-gradient-to-br from-gray-50 via-white to-gray-100"></div>
       
@@ -102,7 +95,7 @@ export function Services({ onQuoteClick }) {
       
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
-        <div className="relative text-center mb-12 sm:mb-16 lg:mb-20">
+        <div className="relative text-center mb-8 sm:mb-12 lg:mb-16">
           {/* Header Background */}
           <div 
             className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-20 rounded-3xl"
@@ -121,11 +114,6 @@ export function Services({ onQuoteClick }) {
               We ensure your event is seamless with our comprehensive mobile services, offering perfect hospitality and hygiene for your guests.
             </p>
             <div className="mt-8 flex items-center justify-center space-x-8 text-sm text-gray-600 drop-shadow-sm">
-              <div className="flex items-center">
-                <Star className="w-4 h-4 text-amber-500 mr-1" />
-                <span className="font-semibold">4.8/5</span>
-                <span className="ml-1">Rating</span>
-              </div>
               <div className="flex items-center">
                 <CheckCircle className="w-4 h-4 text-green-500 mr-1" />
                 <span className="font-semibold">500+</span>
@@ -190,17 +178,9 @@ export function Services({ onQuoteClick }) {
                     src={service.image}
                     alt={service.title}
                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 service-image-mobile"
-                    loading="lazy"
-                    decoding="async"
                     sizes="(min-width: 1024px) 50vw, 100vw"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
-                  
-                  {/* Rating Badge */}
-                  <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm rounded-full px-3 py-1 flex items-center space-x-1">
-                    <Star className="w-4 h-4 text-amber-500 fill-current" />
-                    <span className="text-sm font-semibold text-gray-900">{service.rating}</span>
-                  </div>
                 </div>
 
                 {/* Content */}
@@ -214,9 +194,6 @@ export function Services({ onQuoteClick }) {
                         <h3 className="text-xl sm:text-2xl font-bold text-gray-900 group-hover:text-gray-800 transition-colors duration-300">
                           {service.title}
                         </h3>
-                        <div className="flex items-center mt-1 text-sm text-gray-500">
-                          <span className="font-medium">{service.reviews} reviews</span>
-                        </div>
                       </div>
                     </div>
                   </div>
@@ -234,15 +211,35 @@ export function Services({ onQuoteClick }) {
                     ))}
                   </ul>
                   
-                  <Button
-                    onClick={() => navigate(service.navigateTo)}
-                    className={`w-full bg-gradient-to-r ${service.gradient} hover:shadow-lg text-white font-semibold text-sm sm:text-base px-6 py-3 rounded-xl transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-opacity-50 group-hover:shadow-xl service-button-mobile`}
-                  >
-                    <span className="flex items-center justify-center">
-                      {service.buttonText}
-                      <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform duration-300" />
-                    </span>
-                  </Button>
+                  <div className="flex gap-3">
+                    <Button
+                      onClick={() => navigate(service.navigateTo)}
+                      className={`flex-1 bg-gradient-to-r ${service.gradient} hover:shadow-lg text-white font-semibold text-sm sm:text-base px-4 py-3 rounded-xl transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-opacity-50 group-hover:shadow-xl service-button-mobile`}
+                    >
+                      <span className="flex items-center justify-center">
+                        {service.buttonText}
+                        <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform duration-300" />
+                      </span>
+                    </Button>
+                    <Button
+                      onClick={() => onQuoteClick({
+                        preSelectedService: {
+                          id: service.id,
+                          name: service.title,
+                          description: service.description,
+                          features: service.features,
+                          image: service.image,
+                          category: service.id
+                        }
+                      })}
+                      className="flex-1 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white font-semibold text-sm sm:text-base px-4 py-3 rounded-xl transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 group-hover:shadow-xl"
+                    >
+                      <span className="flex items-center justify-center">
+                        Hire Now
+                        <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform duration-300" />
+                      </span>
+                    </Button>
+                  </div>
                 </div>
               </div>
             );

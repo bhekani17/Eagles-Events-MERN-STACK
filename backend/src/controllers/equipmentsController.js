@@ -12,7 +12,6 @@ export const getAllEquipments = async (req, res) => {
 
 export const createEquipment = async (req, res) => {
     try {
-        console.log('Create Equipment Request Body:', JSON.stringify(req.body, null, 2));
         
         const { 
             name, 
@@ -111,11 +110,6 @@ export const createEquipment = async (req, res) => {
 
 export const updateEquipment = async (req, res) => {
     try {
-        console.log('Update Equipment Request:', {
-            id: req.params.id,
-            body: req.body
-        });
-
         const { 
             name, 
             category, 
@@ -184,7 +178,6 @@ export const updateEquipment = async (req, res) => {
             });
         }
   
-        console.log('Equipment updated successfully:', updatedEquipment._id);
         res.status(200).json({ 
             success: true,
             message: "Equipment updated successfully", 
@@ -202,7 +195,6 @@ export const updateEquipment = async (req, res) => {
 
 export const deleteEquipment = async (req, res) => {
     try {
-        console.log('Delete Equipment Request ID:', req.params.id);
 
         if (!req.params.id) {
             return res.status(400).json({
@@ -231,7 +223,6 @@ export const deleteEquipment = async (req, res) => {
             });
         }
 
-        console.log('Equipment deleted successfully:', req.params.id);
         res.status(200).json({
             success: true,
             message: 'Equipment deleted successfully'
